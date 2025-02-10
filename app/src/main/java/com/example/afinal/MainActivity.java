@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ViewPager2 cakePager = findViewById(R.id.cakePager);
+        ViewPager2 cakePager2 = findViewById(R.id.cakePager2);
 
         int[] cakeImages = {
                 R.drawable.banana4,
@@ -37,10 +38,14 @@ public class MainActivity extends AppCompatActivity {
         Adapter Adapter = new Adapter(this, cakeImages);
         cakePager.setAdapter(Adapter);
 
+        Adapter Adapet2 = new Adapter(this, cakeImages);
+        cakePager2.setAdapter(Adapter);
+
         ImageView cake = findViewById(R.id.cake);
         ImageView car = findViewById(R.id.car);
         ImageView message = findViewById(R.id.message);
         ImageView custom = findViewById(R.id.piece);
+        ImageView filter = findViewById(R.id.filter);
 
         cake.setOnClickListener(v -> {
             cake.animate().scaleX(1.2f).scaleY(1.2f).setDuration(200).withEndAction(() -> {
@@ -69,6 +74,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         });
+        filter.setOnClickListener(v -> {
+            openFilterDialog();
+        });
+    }
+    public void openFilterDialog() {
+        FilterDialogFragment filterDialog = new FilterDialogFragment();
+        filterDialog.show(getSupportFragmentManager(), "filterDialog");
     }
 }
 
