@@ -7,41 +7,54 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomActivity extends AppCompatActivity {
+
+    private RecyclerView ingredientsRecyclerView;
+    private TextView totalPriceText;
+    private Button orderButton;
+    private IngredientAdapter adapter;
+    private List<Ingredient> selectedIngredients = new ArrayList<>();
+    private int totalPrice = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piece);
 
-        Button addBananaButton = findViewById(R.id.addBananaButton);
-        ConstraintLayout constraintLayout = findViewById(R.id.layoutPiece);
+        ingredientsRecyclerView = findViewById(R.id.ingredients_list);
+        totalPriceText = findViewById(R.id.total_price);
+        orderButton = findViewById(R.id.btn_order);
 
-        addBananaButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BananaPlus(constraintLayout);
-            }
-        });
+        ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new IngredientAdapter(getIngredients(), this::onIngredientSelected);
+        ingredientsRecyclerView.setAdapter(adapter);
+
+        orderButton.setOnClickListener(view -> placeOrder());
     }
 
-    private void BananaPlus(ConstraintLayout layout) {
-        TextView bananPlus = new TextView(this);
-        bananPlus.setId(View.generateViewId());
-        bananPlus.setText("Банан");
-        bananPlus.setTextSize(18);
-        bananPlus.setTextColor(getResources().getColor(android.R.color.black));
+    private List<Ingredient> getIngredients() {
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient("Chocolate", 150));
+        ingredients.add(new Ingredient("Banana", 250));
+        ingredients.add(new Ingredient("Strawberry", 350));
+        ingredients.add(new Ingredient("CreamCheese", 200));
+        return ingredients;
+    }
 
-        layout.addView(bananPlus);
+    private void onIngredientSelected(Ingredient ingredient) {
+        selectedIngredients.add(ingredient);
+        totalPrice += ingredient.getPrice();
+        totalPriceText.setText("Price: " + totalPrice + " ₽");
+    }
 
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(layout);
+    private void placeOrder() {
 
-        constraintSet.connect(bananPlus.getId(), ConstraintSet.TOP, R.id.plateBackground, ConstraintSet.TOP, 16);
-        constraintSet.connect(bananPlus.getId(), ConstraintSet.START, R.id.plateBackground, ConstraintSet.START, 16);
-
-        constraintSet.applyTo(layout);
     }
 }
 

@@ -9,20 +9,30 @@
     android:background="#800000">
 
     <RadioButton
-        android:id="@+id/radio_filter1"
+        android:id="@+id/radio_filter_chocolate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Filter 1"
+        android:text="Chocolate"
         tools:ignore="MissingConstraints"
         android:textColor="#F5F5DC"/>
 
     <RadioButton
-        android:id="@+id/radio_filter2"
-        app:layout_constraintTop_toBottomOf="@+id/radio_filter1"
+        android:id="@+id/radio_filter_banana"
+        app:layout_constraintTop_toBottomOf="@+id/radio_filter_chocolate"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Filter 2"
+        android:text="Banana"
+        android:textColor="#F5F5DC"
+        tools:ignore="MissingConstraints" />
+
+    <RadioButton
+        android:id="@+id/radio_filter_strawberry"
+        app:layout_constraintTop_toBottomOf="@+id/radio_filter_banana"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Strawberry"
         android:textColor="#F5F5DC"
         tools:ignore="MissingConstraints" />
 
