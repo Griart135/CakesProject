@@ -7,6 +7,9 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -35,11 +38,46 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.filter4
         };
 
-        Adapter Adapter = new Adapter(this, cakeImages);
-        cakePager.setAdapter(Adapter);
+        String[] cakeNames = {
+                "Banana cake",
+                "Strawberry cake",
+                "Chocolate cake"
+        };
 
-        Adapter Adapet2 = new Adapter(this, cakeImages);
-        cakePager2.setAdapter(Adapter);
+        String[] cakeDescriptions = {
+                "Hamov",
+                "Shat Hamov",
+                "Ahavor Hamov"
+        };
+
+        String[][] ingredients = {
+                {"Banana - 200 ₽", "Chocolate - 150 ₽", "Whipped Cream - 100 ₽"},
+                {"Strawberry - 250 ₽", "Sugar - 50 ₽", "Cream Cheese - 200 ₽"},
+                {"Chocolate - 300 ₽", "Cocoa - 150 ₽", "Whipped Cream - 100 ₽"}
+        };
+
+
+        Adapter adapter = new Adapter(this, cakeImages, imageResId -> {
+            int position = -1;
+            for (int i = 0; i < cakeImages.length; i++) {
+                if (cakeImages[i] == imageResId) {
+                    position = i % cakeNames.length;
+                    break;
+                }
+            }
+            if (position != -1) {
+                Intent intent = new Intent(MainActivity.this, CakeDetalsActivity.class);
+                intent.putExtra("imageResId", imageResId);
+                intent.putExtra("cakeName", cakeNames[position]);
+                intent.putExtra("cakeDescription", cakeDescriptions[position]);
+                intent.putExtra("ingredients", ingredients[position]);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
+        cakePager.setAdapter(adapter);
+        cakePager2.setAdapter(adapter);
 
         ImageView cake = findViewById(R.id.cake);
         ImageView car = findViewById(R.id.car);
@@ -74,13 +112,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         });
-        filter.setOnClickListener(v -> {
-            openFilterDialog();
-        });
+        filter.setOnClickListener(v -> openFilterDialog());
     }
+
     public void openFilterDialog() {
         FilterDialogFragment filterDialog = new FilterDialogFragment();
         filterDialog.show(getSupportFragmentManager(), "filterDialog");
     }
 }
+
 

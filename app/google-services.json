@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "836354211860",
+    "project_id": "avanyancakes-46971",
+    "storage_bucket": "avanyancakes-46971.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836354211860:android:e24b97a9f6937ba1f5e701",
+        "android_client_info": {
+          "package_name": "com.example.afinal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCA5d7H1MIvS8rOlgbu_RaKnIK9JM1PII4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

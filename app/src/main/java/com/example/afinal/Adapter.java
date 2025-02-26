@@ -5,27 +5,44 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+
     private Context context;
     private int[] images;
+    private OnItemClickListener listener;
 
-    public Adapter(Context context, int[] images) {
-        this.context = context;
-        this.images = images;
+    public interface OnItemClickListener {
+        void onItemClick(int imageResId);
     }
 
+    public Adapter(Context context, int[] images, OnItemClickListener listener) {
+        this.context = context;
+        this.images = images;
+        this.listener = listener;
+    }
+
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_cake, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if (position < 0 || position >= images.length){
+            return;
+        }
         holder.cakeImageView.setImageResource(images[position]);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(images[position]);
+            }
+        });
     }
 
     @Override
@@ -36,7 +53,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView cakeImageView;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cakeImageView = itemView.findViewById(R.id.cakeImageView);
         }

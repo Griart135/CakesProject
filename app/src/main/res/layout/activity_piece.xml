@@ -34,9 +34,18 @@
         android:id="@+id/btn_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Заказать"
+        android:text="order"
         android:backgroundTint="#E91E63"
         android:textColor="#FFFFFF"
         android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/button_back_custom"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:text="back"
+        android:backgroundTint="#F5F5DC"/>
+
+
 
 </LinearLayout>
