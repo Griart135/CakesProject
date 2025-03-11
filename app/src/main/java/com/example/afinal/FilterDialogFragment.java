@@ -9,6 +9,13 @@ import android.view.View;
 import androidx.fragment.app.DialogFragment;
 
 public class FilterDialogFragment extends DialogFragment {
+
+    public interface OnFilterApplyListener {
+        void onFilterApply(String filter);
+    }
+
+    private OnFilterApplyListener listener;
+
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
