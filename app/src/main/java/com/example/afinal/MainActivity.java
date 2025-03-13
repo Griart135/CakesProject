@@ -58,28 +58,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ImageView cake = findViewById(R.id.cake);
-        ImageView car = findViewById(R.id.car);
-        ImageView message = findViewById(R.id.message);
         ImageView custom = findViewById(R.id.piece);
         ImageView filter = findViewById(R.id.filter);
 
-        cake.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, CakeDetalsActivity.class);
-            intent.putExtra("cakeImage", R.drawable.banana4);
-            startActivity(intent);
-        });
-
-        car.setOnClickListener(v -> {
-            car.animate().scaleX(1.2f).scaleY(1.2f).setDuration(200).withEndAction(() -> {
-                car.animate().scaleX(1f).scaleY(1f).setDuration(200);
-            });
-        });
-
-        message.setOnClickListener(v -> {
-            message.animate().scaleX(1.2f).scaleY(1.2f).setDuration(200).withEndAction(() -> {
-                message.animate().scaleX(1f).scaleY(1f).setDuration(200);
-            });
-        });
 
         custom.setOnClickListener(v -> {
             custom.animate().scaleX(1.2f).scaleY(1.2f).setDuration(200).withEndAction(() -> {

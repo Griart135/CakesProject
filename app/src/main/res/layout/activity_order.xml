@@ -25,29 +25,39 @@
         android:layout_marginBottom="5dp" />
 
     <TextView
-        android:id="@+id/order_cake_price"
+        android:id="@+id/order_height_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Price: 1200₽"
-        android:textSize="18sp"
-        android:textColor="#F5F5DC"
-        android:layout_marginBottom="20dp" />
-
-    <TextView
-        android:id="@+id/order_size_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Size: 1 kg"
+        android:text="Height: 1.0 cm"
         android:textSize="18sp"
         android:textColor="#F5F5DC"
         android:layout_marginBottom="10dp" />
 
     <SeekBar
-        android:id="@+id/order_size_seekbar"
+        android:id="@+id/order_height_seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="4"
-        android:progress="0"
+        android:max="50"
+        android:progress="10"
+        android:thumbTint="#F5F5DC"
+        android:progressTint="#F5F5DC"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:id="@+id/order_radius_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Radius: 5.0 cm"
+        android:textSize="18sp"
+        android:textColor="#F5F5DC"
+        android:layout_marginBottom="10dp" />
+
+    <SeekBar
+        android:id="@+id/order_radius_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="50"
         android:thumbTint="#F5F5DC"
         android:progressTint="#F5F5DC"
         android:layout_marginBottom="20dp"/>

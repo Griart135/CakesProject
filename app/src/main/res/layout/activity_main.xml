@@ -103,53 +103,29 @@
         android:id="@+id/cake"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="16dp"
         android:contentDescription="Cakes"
         android:src="@drawable/cakeicon4"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:clickable="true"
-        android:focusable="true" />
+        app:layout_constraintEnd_toStartOf="@id/piece"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        android:layout_marginBottom="16dp"/>
 
-    <ImageView
-        android:id="@+id/car"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="50dp"
-        android:contentDescription="delievery"
-        android:src="@drawable/car4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cake"
-        android:clickable="true"
-        android:focusable="true" />
-
-    <ImageView
-        android:id="@+id/message"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="message"
-        android:layout_marginStart="50dp"
-        android:src="@drawable/message4"
-        app:layout_constraintStart_toEndOf="@id/car"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:clickable="true"
-        android:focusable="true"/>
 
     <ImageView
         android:id="@+id/piece"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="custom"
-        android:layout_marginStart="50dp"
+        android:contentDescription="Custom"
         android:src="@drawable/piece4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/message"
         android:clickable="true"
-        android:focusable="true"/>
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cake"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp"/>
 
     <TextView
         android:id="@+id/textCakes"

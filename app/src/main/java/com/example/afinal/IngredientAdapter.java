@@ -1,6 +1,5 @@
 package com.example.afinal;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,35 +8,50 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
-public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
+public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
 
     private final List<Ingredient> ingredients;
-    private final OnIngredientClickListener listener;
+    private final OnIngredientChangeListener listener;
+    private final Set<Ingredient> selectedIngredients = new HashSet<>();
 
-    public interface OnIngredientClickListener {
-        void onIngredientClick(Ingredient ingredient);
+    public interface OnIngredientChangeListener {
+        void onIngredientChange(Ingredient ingredient, boolean isAdding);
     }
 
-    public IngredientAdapter(List<Ingredient> ingredients, OnIngredientClickListener listener) {
+    public IngredientAdapter(List<Ingredient> ingredients, OnIngredientChangeListener listener) {
         this.ingredients = ingredients;
         this.listener = listener;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_ingredient, parent, false);
-        return new ViewHolder(view);
+        return new IngredientViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull IngredientViewHolder holder, int position) {
         Ingredient ingredient = ingredients.get(position);
-        holder.nameTextView.setText(ingredient.getName());
-        holder.priceTextView.setText(ingredient.getPrice() + " ₽");
+        boolean isSelected = selectedIngredients.contains(ingredient);
 
-        holder.addButton.setOnClickListener(v -> listener.onIngredientClick(ingredient));
+        holder.ingredientName.setText(ingredient.getName());
+        holder.ingredientPrice.setText(ingredient.getPrice() + " ₽");
+        holder.actionButton.setText(isSelected ? "Убрать" : "Добавить");
+
+        holder.actionButton.setOnClickListener(v -> {
+            if (isSelected) {
+                selectedIngredients.remove(ingredient);
+                listener.onIngredientChange(ingredient, false);
+            } else {
+                selectedIngredients.add(ingredient);
+                listener.onIngredientChange(ingredient, true);
+            }
+            notifyDataSetChanged();
+        });
     }
 
     @Override
@@ -45,16 +59,15 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         return ingredients.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nameTextView, priceTextView;
-        Button addButton;
+    public static class IngredientViewHolder extends RecyclerView.ViewHolder {
+        TextView ingredientName, ingredientPrice;
+        Button actionButton;
 
-
-        ViewHolder(View itemView) {
+        public IngredientViewHolder(@NonNull View itemView) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.ingredient_name);
-            priceTextView = itemView.findViewById(R.id.ingredient_price);
-            addButton = itemView.findViewById(R.id.btn_add);
+            ingredientName = itemView.findViewById(R.id.ingredient_name);
+            ingredientPrice = itemView.findViewById(R.id.ingredient_price);
+            actionButton = itemView.findViewById(R.id.action_button);
         }
     }
 }

@@ -1,61 +1,48 @@
 package com.example.afinal;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class OrderActivity extends AppCompatActivity {
-    private int selectedSize = 1;
+
+    private TextView heightLabel, radiusLabel;
+    private SeekBar heightSeekBar, radiusSeekBar;
 
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
-        ImageView cakeImage = findViewById(R.id.order_cake_image);
-        TextView cakeName = findViewById(R.id.order_cake_name);
-        TextView cakePrice = findViewById(R.id.order_cake_price);
-        TextView sizeLabel = findViewById(R.id.order_size_label);
-        SeekBar sizeSeekBar = findViewById(R.id.order_size_seekbar);
-        Button confirmButton = findViewById(R.id.confirm_order_button);
+        heightLabel = findViewById(R.id.order_height_label);
+        radiusLabel = findViewById(R.id.order_radius_label);
+        heightSeekBar = findViewById(R.id.order_height_seekbar);
+        radiusSeekBar = findViewById(R.id.order_radius_seekbar);
 
-        Intent intent = getIntent();
-        int imageResId = intent.getIntExtra("imageResId", -1);
-        String name = intent.getStringExtra("cakeName");
-        String price = intent.getStringExtra("cakePrice");
-
-        cakeImage.setImageResource(imageResId);
-        cakeName.setText(name);
-        cakePrice.setText(price);
-
-        sizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        heightSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                selectedSize = progress + 1;
-                sizeLabel.setText("Size : " + selectedSize + " kg");
+                double height = progress / 10.0;
+                heightLabel.setText("Height: " + height + " cm");
             }
-
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
+            public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        confirmButton.setOnClickListener(v -> {
-            Toast.makeText(OrderActivity.this,
-                    "Order Confirmed: " + name + " (" + selectedSize + " kg)", Toast.LENGTH_SHORT);
-            finish();
+        radiusSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                double radius = progress / 10.0;
+                radiusLabel.setText("Radius: " + radius + " cm");
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
     }
 }
+
