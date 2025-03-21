@@ -1,72 +1,82 @@
 package com.example.afinal;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.HashSet;
+
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 public class CustomActivity extends AppCompatActivity {
-
-    private RecyclerView ingredientsRecyclerView;
+    private LinearLayout ingredientsContainer;
     private TextView totalPriceText;
-    private Button orderButton;
-    private IngredientAdapter adapter;
-    private Set<Ingredient> selectedIngredients = new HashSet<>();
     private int totalPrice = 0;
+    private Button orderButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piece);
 
-        Button BacktoMain = findViewById(R.id.button_back_custom);
-        BacktoMain.setOnClickListener(v -> {
-            Intent intent = new Intent(CustomActivity.this, MainActivity.class);
-            startActivity(intent);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        });
-
-        ingredientsRecyclerView = findViewById(R.id.ingredients_list);
+        ingredientsContainer = findViewById(R.id.ingredients_container);
         totalPriceText = findViewById(R.id.total_price);
         orderButton = findViewById(R.id.btn_order);
 
-        ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new IngredientAdapter(getIngredients(), this::updateIngredientSelection);
-        ingredientsRecyclerView.setAdapter(adapter);
+        orderButton.setOnClickListener(v -> {
+            Intent intent = new Intent(CustomActivity.this, OrderActivity.class);
+            startActivity(intent);
+        });
 
-        orderButton.setOnClickListener(view -> placeOrder());
-    }
-
-    private List<Ingredient> getIngredients() {
-        return List.of(
-                new Ingredient("Chocolate", 150),
-                new Ingredient("Banana", 250),
-                new Ingredient("Strawberry", 350),
-                new Ingredient("CreamCheese", 200)
+        RecyclerView ingredientsList = findViewById(R.id.ingredients_list);
+        List<Ingredient> ingredients = Arrays.asList(
+                new Ingredient("Шоколад", 50),
+                new Ingredient("Ваниль", 40),
+                new Ingredient("Карамель", 60),
+                new Ingredient("Шоколад", 50),
+                new Ingredient("Ваниль", 40),
+                new Ingredient("Карамель", 60),
+                new Ingredient("Шоколад", 50),
+                new Ingredient("Ваниль", 40),
+                new Ingredient("Карамель", 60)
         );
+
+        IngredientAdapter adapter = new IngredientAdapter(ingredients, this::updateCakePreview);
+        ingredientsList.setAdapter(adapter);
+        ingredientsList.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void updateIngredientSelection(Ingredient ingredient, boolean isAdding) {
+    private void updateCakePreview(Ingredient ingredient, boolean isAdding) {
         if (isAdding) {
-            selectedIngredients.add(ingredient);
+            TextView ingredientView = new TextView(this);
+            ingredientView.setText(ingredient.getName());
+            ingredientView.setTextSize(16);
+            ingredientView.setTextColor(Color.BLACK);
+            ingredientView.setTag(ingredient.getName());
+            ingredientsContainer.addView(ingredientView);
             totalPrice += ingredient.getPrice();
         } else {
-            selectedIngredients.remove(ingredient);
+            for (int i = 0; i < ingredientsContainer.getChildCount(); i++) {
+                View view = ingredientsContainer.getChildAt(i);
+                if (view instanceof TextView && ingredient.getName().equals(view.getTag())) {
+                    ingredientsContainer.removeView(view);
+                    break;
+                }
+            }
             totalPrice -= ingredient.getPrice();
         }
-
-        totalPriceText.setText("Price: " + totalPrice + " ₽");
-    }
-
-    private void placeOrder() {
+        totalPriceText.setText("Цена: " + totalPrice + " ₽");
     }
 }
+
+
 
 
 

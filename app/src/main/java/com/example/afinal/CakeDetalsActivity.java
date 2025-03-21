@@ -2,51 +2,69 @@ package com.example.afinal;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Arrays;
+
 public class CakeDetalsActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cake_details);
 
-        ImageView cakeImageView = findViewById(R.id.banana_for_pager);
-        TextView cakeNameTextView = findViewById(R.id.cake_name);
-        LinearLayout ingredientsLayout = findViewById(R.id.ingredients_layout);
-
         int imageResId = getIntent().getIntExtra("imageResId", -1);
         String cakeName = getIntent().getStringExtra("cakeName");
-        String[] ingredientsList = getIntent().getStringArrayExtra("ingredients");
+        String cakeDescription = getIntent().getStringExtra("cakeDescription");
+        int price = getIntent().getIntExtra("price", -1);
+        String[] ingredients = getIntent().getStringArrayExtra("ingredients");
 
-        if (imageResId != -1) {
-            cakeImageView.setImageResource(imageResId);
+        Log.d("CakeDetalsActivity", "imageResId: " + imageResId);
+        Log.d("CakeDetalsActivity", "cakeName: " + cakeName);
+        Log.d("CakeDetalsActivity", "cakeDescription: " + cakeDescription);
+        Log.d("CakeDetalsActivity", "price: " + price);
+        Log.d("CakeDetalsActivity", "ingredients: " + Arrays.toString(ingredients));
+
+        if (imageResId == -1 || cakeName == null || cakeDescription == null || price == -1 || ingredients == null) {
+            Log.e("CakeDetalsActivity", "Ошибка при передаче данных в активность!");
+            finish();
+            return;
         }
-        cakeNameTextView.setText(cakeName);
 
-        if (ingredientsList != null) {
-            for (String ingredient : ingredientsList) {
-                TextView ingredientTextView = new TextView(this);
-                ingredientTextView.setText(ingredient);
-                ingredientTextView.setTextSize(16);
-                ingredientsLayout.addView(ingredientTextView);
-            }
-        }
-
-        Button orderButton = findViewById(R.id.order_button);
+        ImageView cakeImage = findViewById(R.id.cakeImage);
+        TextView cakeNameText = findViewById(R.id.cakeName);
+        TextView cakeDescriptionText = findViewById(R.id.cakeDescription);
+        TextView cakePrice = findViewById(R.id.cakePrice);
+        TextView ingredientsText = findViewById(R.id.ingredientsText);
+        Button orderButton = findViewById(R.id.btn_order);
 
         orderButton.setOnClickListener(v -> {
             Intent intent = new Intent(CakeDetalsActivity.this, OrderActivity.class);
-            intent.putExtra("imageResId", imageResId);
-            intent.putExtra("cakeName", cakeName);
-            intent.putExtra("cakePrice", "Price: 1200₽");
+            intent.putExtra("ImageResId", imageResId);
             startActivity(intent);
         });
 
+
+        cakeImage.setImageResource(imageResId);
+        cakeNameText.setText(cakeName);
+        cakeDescriptionText.setText(cakeDescription);
+        cakePrice.setText(String.format("Цена: %d ₽", price));
+
+        StringBuilder ingredientsList = new StringBuilder();
+        if (ingredients != null && ingredients.length > 0) {
+            for (String ingredient : ingredients) {
+                ingredientsList.append(ingredient).append("\n");
+            }
+        } else {
+            ingredientsList.append("Ингредиенты не указаны.");
+        }
+        ingredientsText.setText(ingredientsList.toString());
     }
 }
+
 
 

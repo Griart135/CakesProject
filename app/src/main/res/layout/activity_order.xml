@@ -2,36 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="20dp"
-    android:background="#800000">
+    android:padding="30dp"
+    android:background="#F5F5DC">
 
     <ImageView
-        android:id="@+id/order_cake_image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:id="@+id/cake_image"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
         android:scaleType="centerCrop"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="20dp"/>
+
 
     <TextView
-        android:id="@+id/order_cake_name"
+        android:id="@+id/cake_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cake Name"
-        android:textSize="24sp"
+        android:text="Elegant Chocolate Cake"
+        android:textSize="26sp"
         android:textStyle="bold"
-        android:textColor="#F5F5DC"
-        android:layout_marginBottom="5dp" />
+        android:textColor="#800000"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/order_height_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Height: 1.0 cm"
-        android:textSize="18sp"
-        android:textColor="#F5F5DC"
-        android:layout_marginBottom="10dp" />
+        android:text="Height: 10 cm"
+        android:textSize="20sp"
+        android:textColor="#800000"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"/>
 
     <SeekBar
         android:id="@+id/order_height_seekbar"
@@ -39,35 +43,53 @@
         android:layout_height="wrap_content"
         android:max="50"
         android:progress="10"
-        android:thumbTint="#F5F5DC"
-        android:progressTint="#F5F5DC"
-        android:layout_marginBottom="20dp"/>
+        android:thumbTint="#800000"
+        android:progressTint="#800000"
+        android:layout_marginBottom="30dp"/>
 
     <TextView
         android:id="@+id/order_radius_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Radius: 5.0 cm"
-        android:textSize="18sp"
-        android:textColor="#F5F5DC"
-        android:layout_marginBottom="10dp" />
+        android:text="Radius: 20 cm"
+        android:textSize="20sp"
+        android:textColor="#800000"
+    android:layout_marginBottom="10dp"
+    android:gravity="center"/>
 
     <SeekBar
         android:id="@+id/order_radius_seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:max="100"
-        android:progress="50"
-        android:thumbTint="#F5F5DC"
-        android:progressTint="#F5F5DC"
+        android:progress="20"
+        android:thumbTint="#800000"
+    android:progressTint="#800000"
+    android:layout_marginBottom="30dp"/>
+
+
+    <Button
+        android:id="@+id/order_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confrim Order"
+        android:backgroundTint="#800000"
+        android:textColor="#F5F5DC"
+        android:padding="12dp"
+        android:elevation="4dp"
         android:layout_marginBottom="20dp"/>
 
     <Button
-        android:id="@+id/confirm_order_button"
+        android:id="@+id/clear_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Confirm Order"
-        android:backgroundTint="#F5F5DC"
-        android:textColor="#800000"
-        android:padding="12dp"/>
+        android:text="Clear Selection"
+        android:backgroundTint="#800000"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/ingredients_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
 </LinearLayout>
+

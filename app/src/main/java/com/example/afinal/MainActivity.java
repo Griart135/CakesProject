@@ -1,10 +1,17 @@
 package com.example.afinal;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,70 +20,69 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewPager2 cakePager = findViewById(R.id.cakePager);
-        ViewPager2 cakePager2 = findViewById(R.id.cakePager2);
+        ViewPager2 bannerSlider = findViewById(R.id.bannerSlider);
+        int[] bannerImages = {R.drawable.choco_straw1, R.drawable.nostalgy, R.drawable.choco_straw1, R.drawable.nostalgy,
+                R.drawable.choco_straw1, R.drawable.nostalgy, R.drawable.choco_straw1, R.drawable.nostalgy,
+                R.drawable.choco_straw1, R.drawable.nostalgy, R.drawable.choco_straw1, R.drawable.nostalgy};
+        BannerAdapter bannerAdapter = new BannerAdapter(this, bannerImages);
+        bannerSlider.setAdapter(bannerAdapter);
 
-        int[] cakeImages = {
-                R.drawable.banana4, R.drawable.straw1, R.drawable.filter4,
-                R.drawable.banana4, R.drawable.straw1, R.drawable.filter4,
-                R.drawable.banana4, R.drawable.straw1, R.drawable.filter4
-        };
+        TextView category1 = findViewById(R.id.category1);
+        TextView category2 = findViewById(R.id.category2);
 
-        String[] cakeNames = { "Banana cake", "Strawberry cake", "Chocolate cake" };
-        String[] cakeDescriptions = { "Hamov", "Shat Hamov", "Ahavor Hamov" };
-        String[][] ingredients = {
-                {"Banana - 200 ₽", "Chocolate - 150 ₽", "Whipped Cream - 100 ₽"},
-                {"Strawberry - 250 ₽", "Sugar - 50 ₽", "Cream Cheese - 200 ₽"},
-                {"Chocolate - 300 ₽", "Cocoa - 150 ₽", "Whipped Cream - 100 ₽"}
-        };
+        category1.setOnClickListener(v -> openCategory("cakes"));
+        category2.setOnClickListener(v -> openCategory("other"));
 
-        Adapter adapter = new Adapter(this, cakeImages, imageResId -> {
-            int position = -1;
-            for (int i = 0; i < cakeImages.length; i++) {
-                if (cakeImages[i] == imageResId) {
-                    position = i % cakeNames.length;
-                    break;
-                }
-            }
-            if (position != -1) {
-                Intent intent = new Intent(MainActivity.this, CakeDetalsActivity.class);
-                intent.putExtra("imageResId", cakeImages[position]);
-                intent.putExtra("cakeName", cakeNames[position]);
-                intent.putExtra("cakeDescription", cakeDescriptions[position]);
-                intent.putExtra("ingredients", ingredients[position]);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        });
+        RecyclerView productGrid = findViewById(R.id.productGrid);
+        productGrid.setLayoutManager(new GridLayoutManager(this, 2));
 
-        cakePager.setAdapter(adapter);
-        cakePager2.setAdapter(adapter);
+        List<Product> products = new ArrayList<>();
+        products.add(new Product(
+                "Chocolate Cake", R.drawable.choco_straw1, "Шоколадный торт", 500,
+                new String[] {"Шоколад ", "Какао", "Сливки "}
+        ));
+        products.add(new Product("Strawberry Cake", R.drawable.straw1, "Клубничный торт", 550,
+                new String[] {"Клубника", "Сахар", "Творожный сыр"}
+        ));
+        products.add(new Product("Banana Cake", R.drawable.banana4, "Банановый торт", 520,
+                new String[] {"Банан", "Шоколад ", "Крем"}
+        ));
+        products.add(new Product("Vanilla Cake", R.drawable.nostalgy, "Ванильный торт", 480,
+                new String[] {"Ваниль", "Мука ", "Масло"}
+        ));
 
-        cakePager.setPageTransformer((page, position) -> {
-            page.setAlpha(0.7f + (1 - Math.abs(position)) * 0.3f);
-            page.setScaleY(0.8f + (1 - Math.abs(position)) * 0.2f);
-        });
+        ProductAdapter productAdapter = new ProductAdapter(this, products, this::openProductDetails);
+        productGrid.setAdapter(productAdapter);
 
-        ImageView cake = findViewById(R.id.cake);
-        ImageView custom = findViewById(R.id.piece);
-        ImageView filter = findViewById(R.id.filter);
-
-
-        custom.setOnClickListener(v -> {
-            custom.animate().scaleX(1.2f).scaleY(1.2f).setDuration(200).withEndAction(() -> {
-                custom.animate().scaleX(1f).scaleY(1f).setDuration(200);
-                startActivity(new Intent(MainActivity.this, CustomActivity.class));
-            });
-        });
-
-        filter.setOnClickListener(v -> openFilterDialog());
+        ImageView iconGoToCustom = findViewById(R.id.iconGoToCustom);
+        iconGoToCustom.setOnClickListener(v -> openCustomActivity());
     }
 
-    public void openFilterDialog() {
-        FilterDialogFragment filterDialog = new FilterDialogFragment();
-        filterDialog.show(getSupportFragmentManager(), "filterDialog");
+    private void openCategory(String categoryName) {
+        Intent intent = new Intent(this, CategoryActivity.class);
+        intent.putExtra("categoryName", categoryName);
+        startActivity(intent);
+    }
+
+    private void openProductDetails(Product product) {
+        Intent intent = new Intent(this, CakeDetalsActivity.class);
+        intent.putExtra("imageResId", product.getImageResId());
+        intent.putExtra("cakeName", product.getName());
+        intent.putExtra("cakeDescription", product.getDescription());
+        intent.putExtra("price", product.getPrice());
+        intent.putExtra("ingredients", product.getIngredients());
+        startActivity(intent);
+    }
+
+    private void openCustomActivity() {
+        Intent intent = new Intent(this, CustomActivity.class);
+        startActivity(intent);
     }
 }
+
+
+
+
 
 
 

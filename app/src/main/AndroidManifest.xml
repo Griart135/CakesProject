@@ -24,6 +24,7 @@
         <activity android:name=".CustomActivity" android:exported="true"></activity>
         <activity android:name=".CakeDetalsActivity"/>
         <activity android:name=".OrderActivity"/>
+        <activity android:name=".CategoryActivity"></activity>
     </application>
 
 </manifest>

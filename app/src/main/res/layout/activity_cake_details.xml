@@ -1,107 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#800000">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp"
-        android:layout_marginBottom="70dp">
+    <ImageView
+        android:id="@+id/cakeImage"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:scaleType="centerCrop"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+    <TextView
+        android:id="@+id/cakeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cake Name"
+        android:textSize="24sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/cakeImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-            <TextView
-                android:id="@+id/cake_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Banana Cake"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:textColor="#F5F5DC"
-                android:layout_marginTop="20dp"/>
+    <TextView
+        android:id="@+id/cakeDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/cakeName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-            <ImageView
-                android:id="@+id/banana_for_pager"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:scaleType="centerCrop"
-                android:contentDescription="Cake Image"
-                android:layout_marginTop="10dp"/>
+    <TextView
+        android:id="@+id/cakePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Цена: 500 ₽"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/cakeDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-            <TextView
-                android:id="@+id/ingredients_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ingredients"
-                android:textSize="20sp"
-                android:textColor="#F5F5DC"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"/>
+    <TextView
+        android:id="@+id/ingredientsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ингредиенты"
+        android:textSize="16sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/cakePrice"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-            <LinearLayout
-                android:id="@+id/ingredients_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"/>
-
-            <TextView
-                android:id="@+id/similar_cakes_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Similar Cakes"
-                android:textSize="20sp"
-                android:textColor="#F5F5DC"
-                android:textStyle="bold"
-                android:layout_marginTop="30dp"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/similar_cakes_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:nestedScrollingEnabled="false"
-                android:minHeight="200dp"/>
-        </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout
+    <Button
+        android:id="@+id/btn_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="16dp"
-        android:background="#660000">
+        android:text="Заказать"
+        android:backgroundTint="#800000"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/ingredientsText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
 
-        <Button
-            android:id="@+id/order_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Order Now"
-            android:padding="12dp"
-            android:backgroundTint="#F5F5DC"
-            android:textColor="#800000"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/basket_inDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Basket"
-            android:textColor="#800000"
-            android:backgroundTint="#F5F5DC"
-            android:contentDescription="Basket"
-            android:tint="#800000"/>
-    </LinearLayout>
-</FrameLayout>
 
 
 

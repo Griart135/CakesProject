@@ -1,6 +1,9 @@
 package com.example.afinal;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +13,7 @@ public class OrderActivity extends AppCompatActivity {
     private TextView heightLabel, radiusLabel;
     private SeekBar heightSeekBar, radiusSeekBar;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,15 +23,29 @@ public class OrderActivity extends AppCompatActivity {
         radiusLabel = findViewById(R.id.order_radius_label);
         heightSeekBar = findViewById(R.id.order_height_seekbar);
         radiusSeekBar = findViewById(R.id.order_radius_seekbar);
+        ImageView orderCakeImage = findViewById(R.id.cake_image);
+
+        int imageResId = getIntent().getIntExtra("ImageResId", -1);
+
+        if (imageResId != -1) {
+            orderCakeImage.setImageResource(imageResId);
+        } else {
+            orderCakeImage.setVisibility(View.GONE);
+        }
+
+        heightSeekBar.setProgress(10);
+        radiusSeekBar.setProgress(50);
 
         heightSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                double height = progress / 10.0;
+                double height = Math.round(progress / 10.0 * 10.0) / 10.0;
                 heightLabel.setText("Height: " + height + " cm");
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
@@ -35,14 +53,18 @@ public class OrderActivity extends AppCompatActivity {
         radiusSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                double radius = progress / 10.0;
+                double radius = Math.round(progress / 10.0 * 10.0) / 10.0;
                 radiusLabel.setText("Radius: " + radius + " cm");
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
     }
 }
+
+
 
