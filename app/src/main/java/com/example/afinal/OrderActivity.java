@@ -24,8 +24,16 @@ public class OrderActivity extends AppCompatActivity {
         heightSeekBar = findViewById(R.id.order_height_seekbar);
         radiusSeekBar = findViewById(R.id.order_radius_seekbar);
         ImageView orderCakeImage = findViewById(R.id.cake_image);
+        TextView cakeNameTextView = findViewById(R.id.cake_name);
+
 
         int imageResId = getIntent().getIntExtra("ImageResId", -1);
+        String cakeName = getIntent().getStringExtra("cake_name");
+
+        if (cakeName != null) {
+            cakeNameTextView.setText(cakeName);
+        }
+
 
         if (imageResId != -1) {
             orderCakeImage.setImageResource(imageResId);

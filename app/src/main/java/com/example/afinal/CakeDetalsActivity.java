@@ -45,6 +45,7 @@ public class CakeDetalsActivity extends AppCompatActivity {
         orderButton.setOnClickListener(v -> {
             Intent intent = new Intent(CakeDetalsActivity.this, OrderActivity.class);
             intent.putExtra("ImageResId", imageResId);
+            intent.putExtra("cake_name", cakeName);
             startActivity(intent);
         });
 
