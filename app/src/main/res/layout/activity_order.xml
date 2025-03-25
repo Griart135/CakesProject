@@ -53,7 +53,7 @@
                 android:id="@+id/order_height_seekbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="50"
+                android:max="45"
                 android:progress="10"
                 android:thumbTint="#800000"
                 android:progressTint="#800000"/>
@@ -80,7 +80,7 @@
                 android:id="@+id/order_radius_seekbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="100"
+                android:max="25"
                 android:progress="20"
                 android:thumbTint="#800000"
                 android:progressTint="#800000"/>
@@ -98,17 +98,48 @@
         android:elevation="4dp"
         android:layout_marginBottom="10dp"/>
 
-    <Button
-        android:id="@+id/order_slices_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Заказать по кускам"
-        android:backgroundTint="#800000"
-        android:textColor="#FFFFFF"
-        android:padding="6dp"
-        android:elevation="4dp"
-        android:layout_marginBottom="10dp"
-        android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Куски:"
+            android:textSize="18sp"
+            android:textColor="#800000"
+            android:layout_marginEnd="10dp"/>
+
+        <NumberPicker
+            android:id="@+id/order_slices_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/order_slices_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:backgroundTint="#800000"
+            android:textColor="#FFFFFF"
+            android:padding="6dp"
+            android:elevation="4dp"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/slices_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Куски: 1"
+            android:textSize="18sp"
+            android:textColor="#800000"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/clear_button"
