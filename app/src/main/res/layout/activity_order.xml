@@ -18,7 +18,7 @@
         android:id="@+id/cake_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Elegant Chocolate Cake"
+        android:text="Your Custom Cake"
         android:textSize="26sp"
         android:textStyle="bold"
         android:textColor="#800000"
@@ -151,5 +151,7 @@
         android:layout_marginTop="16dp"/>
 
 </LinearLayout>
+
+
 
 

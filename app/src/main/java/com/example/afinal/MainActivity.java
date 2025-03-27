@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         products.add(new Product("Strawberry Cake", R.drawable.straw1, "Клубничный торт", 550,
                 new String[] {"Клубника", "Сахар", "Творожный сыр"}
         ));
-        products.add(new Product("Banana Cake", R.drawable.banana4, "Банановый торт", 520,
+        products.add(new Product("Banana Cake", R.drawable.cheesecake, "Банановый торт", 520,
                 new String[] {"Банан", "Шоколад ", "Крем"}
         ));
         products.add(new Product("Vanilla Cake", R.drawable.nostalgy, "Ванильный торт", 480,

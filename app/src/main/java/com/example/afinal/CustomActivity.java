@@ -58,8 +58,7 @@ public class CustomActivity extends AppCompatActivity {
             TextView ingredientView = new TextView(this);
             ingredientView.setText(ingredient.getName());
             ingredientView.setTextSize(16);
-            ingredientView.setTextColor(Color.BLACK);
-            ingredientView.setTag(ingredient.getName());
+            ingredientView.setTextColor(Color.parseColor("#F5F5DC"));
             ingredientsContainer.addView(ingredientView);
             totalPrice += ingredient.getPrice();
         } else {

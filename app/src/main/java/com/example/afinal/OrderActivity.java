@@ -17,7 +17,7 @@ public class OrderActivity extends AppCompatActivity {
     private TextView heightLabel, radiusLabel, slicesLabel;
     private SeekBar heightSeekBar, radiusSeekBar;
     private NumberPicker slicesPicker;
-    private Button orderSlicesButton;
+    private Button orderSlicesButton, clearSelectionButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -34,7 +34,16 @@ public class OrderActivity extends AppCompatActivity {
         slicesPicker = findViewById(R.id.order_slices_picker);
         orderSlicesButton = findViewById(R.id.order_slices_button);
         slicesLabel = findViewById(R.id.slices_label);
+        clearSelectionButton = findViewById(R.id.clear_button);
 
+        clearSelectionButton.setOnClickListener(v -> {
+            heightSeekBar.setProgress(10);
+            radiusSeekBar.setProgress(20);
+            slicesPicker.setValue(1);
+            heightLabel.setText("Height: 10 cm");
+            radiusLabel.setText("Radius: 20 cm");
+            slicesLabel.setText("Куски: 1");
+        });
 
 
         slicesPicker.setMinValue(1);
@@ -106,6 +115,9 @@ public class OrderActivity extends AppCompatActivity {
         });
     }
 }
+
+
+
 
 
 
