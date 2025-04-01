@@ -1,17 +1,33 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
 alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.google.gms.google.services) apply false
 }
+//
+//dependencies {
+//    classpath 'com.google.gms:google-services:4.3.10' // Firebase
+//}
+
 //buildscript {
 //    repositories {
 //        google()
 //        mavenCentral()
 //    }
 //    dependencies {
-//        classpath 'com.android.tools.build:gradle:7.4.0'  // Версия плагина для Android
-//        classpath 'com.google.gms:google-services:4.3.15'  // Плагин для Firebase, если нужен
+//        classpath 'com.google.gms:google-services:4.3.10'
 //    }
 //}
+//
+//allprojects {
+//    repositories {
+//        google()
+//        mavenCentral()
+//    }
+//}
+
+
+
+
 //
 //allprojects {
 //    repositories {

@@ -2,6 +2,7 @@ package com.example.afinal;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,12 +13,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 public class OrderActivity extends AppCompatActivity {
 
     private TextView heightLabel, radiusLabel, slicesLabel;
     private SeekBar heightSeekBar, radiusSeekBar;
     private NumberPicker slicesPicker;
-    private Button orderSlicesButton, clearSelectionButton;
+    private Button orderSlicesButton, clearSelectionButton, confirmButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -106,13 +113,53 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
-        Button orderButton = findViewById(R.id.order_button);
+        Button orderButton = findViewById(R.id.confirm_order_button);
         orderButton.setOnClickListener(v -> {
             int height = heightSeekBar.getProgress() + 5;
             int radius = radiusSeekBar.getProgress() + 5;
+            int slices = slicesPicker.getValue();
 
-            Toast.makeText(OrderActivity.this, "Вы заказали торт с высотой " + height + " см и радиусом " + radius + " см", Toast.LENGTH_SHORT).show();
+            Product cake = new Product("Chocolate Cake", R.drawable.cheesecake, "Delicious chocolate cake",
+                    500, new String[]{"Flour", "Sugar", "Cocoa"});
+            saveOrderToFirestore(cake, height, radius, slices);
+
+
+            Toast.makeText(OrderActivity.this, "Вы заказали торт с высотой " + height
+                    + " см, радиусом " + radius + " см и " + slices + " кусочками.", Toast.LENGTH_SHORT).show();
         });
+
+
+    }
+    public void saveOrderToFirestore(Product product, int height, int radius, int slices) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> orderData = new HashMap<>();
+        orderData.put("name", product.getName());
+        orderData.put("description", product.getDescription());
+        orderData.put("price", product.getPrice());
+        orderData.put("ingredients", Arrays.asList(product.getIngredients()));
+        orderData.put("height", height);
+        orderData.put("radius", radius);
+        orderData.put("slices", slices);
+
+        db.collection("orders")
+                .add(orderData)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("Firestore", "Order saved with ID: " + documentReference.getId());
+                })
+                .addOnFailureListener(e -> {
+                    Log.w("Firestore", "Error adding document", e);
+                });
+    }
+
+
+    private Map<String, Object> createOrderData(Product product) {
+        Map<String, Object> orderData = new HashMap<>();
+        orderData.put("name", product.getName());
+        orderData.put("description", product.getDescription());
+        orderData.put("price", product.getPrice());
+        orderData.put("ingredients", Arrays.asList(product.getIngredients()));
+        return orderData;
     }
 }
 

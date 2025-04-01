@@ -31,14 +31,14 @@ public class CategoryActivity extends AppCompatActivity {
 
         List<Product> products = new ArrayList<>();
         if ("cakes".equals(categoryName)) {
-            products.add(new Product("Chocolate Cake", R.drawable.choco_straw1, "Шоколадный торт", 500,
+            products.add(new Product("Chocolate Cake", R.drawable.cheesecake, "Шоколадный торт", 500,
                     new String[] {"Шоколад", "Мука", "Сахар"}));
-            products.add(new Product("Strawberry Cake", R.drawable.straw1, "Клубничный торт", 550,
+            products.add(new Product("Strawberry Cake", R.drawable.cheesecake, "Клубничный торт", 550,
                     new String[] {"Клубника", "Мука", "Сахар"}));
         } else if ("other".equals(categoryName)) {
-            products.add(new Product("Banana Cake", R.drawable.banana4, "Банановый торт", 520,
+            products.add(new Product("Banana Cake", R.drawable.cheesecake, "Банановый торт", 520,
                     new String[] {"Бананы", "Мука", "Сахар"}));
-            products.add(new Product("Vanilla Cake", R.drawable.nostalgy, "Ванильный торт", 480,
+            products.add(new Product("Vanilla Cake", R.drawable.cheesecake, "Ванильный торт", 480,
                     new String[] {"Ваниль", "Мука", "Сахар"}));
         }
 
