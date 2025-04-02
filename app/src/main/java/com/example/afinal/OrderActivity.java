@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
@@ -25,12 +27,15 @@ public class OrderActivity extends AppCompatActivity {
     private SeekBar heightSeekBar, radiusSeekBar;
     private NumberPicker slicesPicker;
     private Button orderSlicesButton, clearSelectionButton, confirmButton;
+    private FirebaseAuth auth; // Добавляем FirebaseAuth
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+
+        auth = FirebaseAuth.getInstance();
 
         heightLabel = findViewById(R.id.order_height_label);
         radiusLabel = findViewById(R.id.order_radius_label);
@@ -52,7 +57,6 @@ public class OrderActivity extends AppCompatActivity {
             slicesLabel.setText("Куски: 1");
         });
 
-
         slicesPicker.setMinValue(1);
         slicesPicker.setMaxValue(12);
         slicesPicker.setWrapSelectorWheel(true);
@@ -60,8 +64,6 @@ public class OrderActivity extends AppCompatActivity {
         slicesPicker.setOnValueChangedListener((picker, oldVal, newVal) ->
                 slicesLabel.setText("Куски: " + newVal)
         );
-
-
 
         orderSlicesButton.setOnClickListener(v -> {
             int selectedSlices = slicesPicker.getValue();
@@ -74,7 +76,6 @@ public class OrderActivity extends AppCompatActivity {
         if (cakeName != null) {
             cakeNameTextView.setText(cakeName);
         }
-
 
         if (imageResId != -1) {
             orderCakeImage.setImageResource(imageResId);
@@ -113,25 +114,45 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+
         Button orderButton = findViewById(R.id.confirm_order_button);
         orderButton.setOnClickListener(v -> {
-            int height = heightSeekBar.getProgress() + 5;
-            int radius = radiusSeekBar.getProgress() + 5;
-            int slices = slicesPicker.getValue();
+            FirebaseUser currentUser = auth.getCurrentUser();
+            if (currentUser == null) {
+                auth.signInAnonymously()
+                        .addOnCompleteListener(this, task -> {
+                            if (task.isSuccessful()) {
+                                Log.d("Auth", "Анонимный вход успешен. UID: " + auth.getCurrentUser().getUid());
+                                saveOrder();
+                            } else {
+                                Log.e("Auth", "Ошибка анонимного входа", task.getException());
+                                Toast.makeText(OrderActivity.this, "Ошибка авторизации", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                saveOrder();
+            }
 
-            Product cake = new Product("Chocolate Cake", R.drawable.cheesecake, "Delicious chocolate cake",
-                    500, new String[]{"Flour", "Sugar", "Cocoa"});
-            saveOrderToFirestore(cake, height, radius, slices);
 
-
-            Toast.makeText(OrderActivity.this, "Вы заказали торт с высотой " + height
-                    + " см, радиусом " + radius + " см и " + slices + " кусочками.", Toast.LENGTH_SHORT).show();
         });
-
-
     }
+
+    private void saveOrder() {
+        int height = heightSeekBar.getProgress() + 5;
+        int radius = radiusSeekBar.getProgress() + 5;
+        int slices = slicesPicker.getValue();
+
+        Product cake = new Product("Chocolate Cake", R.drawable.cheesecake, "Delicious chocolate cake",
+                500, new String[]{"Flour", "Sugar", "Cocoa"});
+        saveOrderToFirestore(cake, height, radius, slices);
+
+        Toast.makeText(OrderActivity.this, "Вы заказали торт с высотой " + height
+                + " см, радиусом " + radius + " см и " + slices + " кусочками.", Toast.LENGTH_SHORT).show();
+    }
+
     public void saveOrderToFirestore(Product product, int height, int radius, int slices) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
 
         Map<String, Object> orderData = new HashMap<>();
         orderData.put("name", product.getName());
@@ -141,6 +162,7 @@ public class OrderActivity extends AppCompatActivity {
         orderData.put("height", height);
         orderData.put("radius", radius);
         orderData.put("slices", slices);
+        orderData.put("userId", currentUser.getUid());
 
         db.collection("orders")
                 .add(orderData)
@@ -152,7 +174,6 @@ public class OrderActivity extends AppCompatActivity {
                 });
     }
 
-
     private Map<String, Object> createOrderData(Product product) {
         Map<String, Object> orderData = new HashMap<>();
         orderData.put("name", product.getName());
@@ -162,7 +183,6 @@ public class OrderActivity extends AppCompatActivity {
         return orderData;
     }
 }
-
 
 
 
