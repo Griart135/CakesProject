@@ -7,9 +7,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
 
@@ -38,20 +39,26 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         Ingredient ingredient = ingredients.get(position);
         boolean isSelected = selectedIngredients.contains(ingredient);
 
-        holder.ingredientName.setText(ingredient.getName());
-        holder.ingredientPrice.setText(ingredient.getPrice() + " ₽");
-        holder.actionButton.setText(isSelected ? "Убрать" : "Добавить");
+        if (ingredient != null) {
+            holder.ingredientName.setText(ingredient.getName());
+            holder.ingredientPrice.setText(ingredient.getPrice() + " ₽");
+            holder.actionButton.setText(isSelected ? "Убрать" : "Добавить");
 
-        holder.actionButton.setOnClickListener(v -> {
-            if (isSelected) {
-                selectedIngredients.remove(ingredient);
-                listener.onIngredientChange(ingredient, false);
-            } else {
-                selectedIngredients.add(ingredient);
-                listener.onIngredientChange(ingredient, true);
-            }
-            notifyDataSetChanged();
-        });
+            holder.actionButton.setOnClickListener(v -> {
+                if (isSelected) {
+                    selectedIngredients.remove(ingredient);
+                    listener.onIngredientChange(ingredient, false);
+                } else {
+                    selectedIngredients.add(ingredient);
+                    listener.onIngredientChange(ingredient, true);
+                }
+                notifyItemChanged(position);
+            });
+        } else {
+            holder.ingredientName.setText("Неизвестный ингредиент");
+            holder.ingredientPrice.setText("0 ₽");
+            holder.actionButton.setText("Добавить");
+        }
     }
 
     @Override
