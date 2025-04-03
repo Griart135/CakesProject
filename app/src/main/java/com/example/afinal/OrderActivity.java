@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.SeekBar;
@@ -27,7 +28,8 @@ public class OrderActivity extends AppCompatActivity {
     private SeekBar heightSeekBar, radiusSeekBar;
     private NumberPicker slicesPicker;
     private Button orderSlicesButton, clearSelectionButton, confirmButton;
-    private FirebaseAuth auth; // Добавляем FirebaseAuth
+    private FirebaseAuth auth;
+    private EditText addressInput;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -47,6 +49,8 @@ public class OrderActivity extends AppCompatActivity {
         orderSlicesButton = findViewById(R.id.order_slices_button);
         slicesLabel = findViewById(R.id.slices_label);
         clearSelectionButton = findViewById(R.id.clear_button);
+        addressInput = findViewById(R.id.address_input);
+
 
         clearSelectionButton.setOnClickListener(v -> {
             heightSeekBar.setProgress(10);
@@ -141,16 +145,23 @@ public class OrderActivity extends AppCompatActivity {
         int height = heightSeekBar.getProgress() + 5;
         int radius = radiusSeekBar.getProgress() + 5;
         int slices = slicesPicker.getValue();
+        String address = addressInput.getText().toString().trim();
+
+        if (address.isEmpty()) {
+            Toast.makeText(this, "Введите ваш адрес!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Product cake = new Product("Chocolate Cake", R.drawable.cheesecake, "Delicious chocolate cake",
                 500, new String[]{"Flour", "Sugar", "Cocoa"});
-        saveOrderToFirestore(cake, height, radius, slices);
+        saveOrderToFirestore(cake, height, radius, slices, address);
 
         Toast.makeText(OrderActivity.this, "Вы заказали торт с высотой " + height
-                + " см, радиусом " + radius + " см и " + slices + " кусочками.", Toast.LENGTH_SHORT).show();
+                + " см, радиусом " + radius + " см и " + slices + " кусочками.\\nДоставка по адресу: " +
+                address, Toast.LENGTH_SHORT).show();
     }
 
-    public void saveOrderToFirestore(Product product, int height, int radius, int slices) {
+    public void saveOrderToFirestore(Product product, int height, int radius, int slices,  String address) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
 
@@ -162,6 +173,7 @@ public class OrderActivity extends AppCompatActivity {
         orderData.put("height", height);
         orderData.put("radius", radius);
         orderData.put("slices", slices);
+        orderData.put("address", address);
         orderData.put("userId", currentUser.getUid());
 
         db.collection("orders")
