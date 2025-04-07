@@ -13,8 +13,7 @@ import java.util.List;
 
 public class CategoryActivity extends AppCompatActivity {
 
-    private RecyclerView categoryRecyclerView;
-    private CategoryAdapter categoryAdapter;
+    private ProductAdapter productAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +41,7 @@ public class CategoryActivity extends AppCompatActivity {
                     new String[] {"Ваниль", "Мука", "Сахар"}));
         }
 
-
-
-        ProductAdapter productAdapter = new ProductAdapter(this, products, this::openProductDetails);
+        productAdapter = new ProductAdapter(this, products, this::openProductDetails);
         productGrid.setAdapter(productAdapter);
     }
 
@@ -58,4 +55,5 @@ public class CategoryActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
+
 

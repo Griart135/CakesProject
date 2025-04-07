@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,11 +16,23 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private Context context;
     private List<Product> products;
     private OnProductClickListener onProductClickListener;
+    private OnProductActionListener actionListener;
 
-    public ProductAdapter(Context context, List<Product> products, OnProductClickListener onProductClickListener) {
+
+    public ProductAdapter(Context context, List<Product> products, OnProductClickListener onProductClickListener,
+                          OnProductActionListener actionListener) {
         this.context = context;
         this.products = products;
         this.onProductClickListener = onProductClickListener;
+        this.actionListener = actionListener;
+    }
+
+    public ProductAdapter(CategoryActivity context, List<Product> products, OnProductClickListener openProductDetails) {
+    }
+
+    public void updateProducts(List<Product> newProducts) {
+        this.products = newProducts;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -48,9 +61,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         void onProductClick(Product product);
     }
 
+    public interface OnProductActionListener {
+        void onAddToFavorites(Product product);
+        void onAddToCart(Product product);
+    }
+
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         TextView productName, productDescription, productPrice;
         ImageView productImage;
+        ImageButton btnFavorite, btnCart;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
@@ -58,6 +77,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productDescription = itemView.findViewById(R.id.productDescription);
             productPrice = itemView.findViewById(R.id.productPrice);
             productImage = itemView.findViewById(R.id.productImage);
+            btnFavorite = itemView.findViewById(R.id.btnFavorite);
+            btnCart = itemView.findViewById(R.id.btnCart);
         }
     }
 }

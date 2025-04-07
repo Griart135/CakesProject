@@ -37,7 +37,10 @@
 //}
 package com.example.afinal;
 
-public class Product {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Product implements Parcelable{
     private String name;
     private int imageResId;
     private String description;
@@ -51,6 +54,26 @@ public class Product {
         this.price = price;
         this.ingredients = ingredients;
     }
+
+    protected Product(Parcel in) {
+        name = in.readString();
+        imageResId = in.readInt();
+        description = in.readString();
+        price = in.readInt();
+        ingredients = in.createStringArray();
+    }
+
+    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -70,6 +93,20 @@ public class Product {
 
     public String[] getIngredients() {
         return ingredients;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(imageResId);
+        dest.writeString(description);
+        dest.writeInt(price);
+        dest.writeStringArray(ingredients);
     }
 }
 

@@ -42,4 +42,35 @@
         android:textColor="#FF0000"
         app:layout_constraintTop_toBottomOf="@id/productDescription"
         app:layout_constraintStart_toEndOf="@id/productImage"/>
+
+    <ImageButton
+        android:id="@+id/btnFavorite"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@android:drawable/btn_star_big_off"
+        android:contentDescription="Add to Favorite"
+        app:layout_constraintTop_toBottomOf="@id/productPrice"
+        app:layout_constraintStart_toEndOf="@id/productImage"/>
+
+    <ImageButton
+        android:id="@+id/btnCart"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@android:drawable/ic_menu_add"
+        android:contentDescription="Add to Cart"
+        app:layout_constraintTop_toBottomOf="@id/btnFavorite"
+        app:layout_constraintStart_toEndOf="@id/productImage"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
