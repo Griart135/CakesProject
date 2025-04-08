@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -18,8 +19,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private OnProductClickListener onProductClickListener;
     private OnProductActionListener actionListener;
 
-
-    public ProductAdapter(Context context, List<Product> products, OnProductClickListener onProductClickListener,
+    public ProductAdapter(Context context, List<Product> products,
+                          OnProductClickListener onProductClickListener,
                           OnProductActionListener actionListener) {
         this.context = context;
         this.products = products;
@@ -27,7 +28,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         this.actionListener = actionListener;
     }
 
-    public ProductAdapter(CategoryActivity context, List<Product> products, OnProductClickListener openProductDetails) {
+    public ProductAdapter(Context context, List<Product> products,
+                          OnProductClickListener onProductClickListener) {
+        this(context, products, onProductClickListener, new OnProductActionListener() {
+            @Override public void onAddToFavorites(Product product) {}
+            @Override public void onAddToCart(Product product) {}
+        });
     }
 
     public void updateProducts(List<Product> newProducts) {
@@ -50,6 +56,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.productImage.setImageResource(product.getImageResId());
 
         holder.itemView.setOnClickListener(v -> onProductClickListener.onProductClick(product));
+
+        holder.btnFavorite.setOnClickListener(v -> actionListener.onAddToFavorites(product));
+        holder.btnCart.setOnClickListener(v -> actionListener.onAddToCart(product));
     }
 
     @Override
@@ -77,8 +86,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productDescription = itemView.findViewById(R.id.productDescription);
             productPrice = itemView.findViewById(R.id.productPrice);
             productImage = itemView.findViewById(R.id.productImage);
-            btnFavorite = itemView.findViewById(R.id.btnFavorite);
-            btnCart = itemView.findViewById(R.id.btnCart);
+            btnFavorite = itemView.findViewById(R.id.favoriteIcon);
+            btnCart = itemView.findViewById(R.id.cartIcon);
         }
     }
 }
+

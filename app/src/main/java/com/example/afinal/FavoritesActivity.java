@@ -46,4 +46,3 @@ public class FavoritesActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 }
-
