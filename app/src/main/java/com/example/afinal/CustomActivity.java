@@ -63,13 +63,15 @@ public class CustomActivity extends AppCompatActivity {
 
         IngredientAdapter adapter = new IngredientAdapter(ingredients, this::updateCakePreview);
         ingredientsList.setAdapter(adapter);
-        ingredientsList.setLayoutManager(new LinearLayoutManager(this));
+        ingredientsList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         cakeAdapter = new CakeAdapter(new ArrayList<>());
         cakesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         cakesRecyclerView.setAdapter(cakeAdapter);
 
         cakesRecyclerView.post(() -> cakesRecyclerView.scrollToPosition(0));
+
+        filterCakesByIngredients();
     }
 
     private void updateCakePreview(Ingredient ingredient, boolean isAdding) {
@@ -79,6 +81,7 @@ public class CustomActivity extends AppCompatActivity {
             ingredientView.setText(ingredient.getName());
             ingredientView.setTextSize(16);
             ingredientView.setTextColor(Color.parseColor("#F5F5DC"));
+            ingredientView.setPadding(8, 4, 8, 4);
             ingredientsContainer.addView(ingredientView);
             totalPrice += ingredient.getPrice();
         } else {

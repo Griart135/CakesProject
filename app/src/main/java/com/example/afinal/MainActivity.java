@@ -125,11 +125,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-//        iconCart.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, CartActivity.class);
-//            intent.putParcelableArrayListExtra("cart", new ArrayList<>(cartCakes));
-//            startActivity(intent);
-//        });
+        iconCart.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CartActivity.class);
+            intent.putParcelableArrayListExtra("cart", new ArrayList<>(cartCakes));
+            startActivity(intent);
+        });
 
         iconShare.setOnClickListener(v -> shareApp());
         iconProfile.setOnClickListener(v -> goToProfile());

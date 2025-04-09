@@ -15,64 +15,120 @@
         android:layout_marginTop="20dp"
         android:scaleType="centerCrop"/>
 
-    <TextView
-        android:id="@+id/cakeName"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/nameDescFrame"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Cake Name"
-        android:textSize="24sp"
-        android:layout_marginTop="20dp"
+        android:background="#E0FFF8E1"
+        android:padding="12dp"
+        android:elevation="4dp"
+        app:layout_constraintWidth_percent="0.85"
         app:layout_constraintTop_toBottomOf="@id/cakeImage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp">
 
-    <TextView
-        android:id="@+id/cakeDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:textSize="16sp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/cakeName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+            android:id="@+id/cakeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cake Name"
+            android:textSize="28sp"
+            android:textStyle="bold|italic"
+            android:textColor="#D81B60"
+            android:shadowColor="#88000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4"
+            android:rotation="-5"
+            android:padding="8dp"
+            android:background="#80FFF8E1"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/cakeDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="18sp"
+            android:textStyle="bold|italic"
+            android:textColor="#800000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
+            android:rotation="5"
+            android:padding="8dp"
+            android:background="#80FFF8E1"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"/>
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/cakePrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Цена: 500 ₽"
-        android:textSize="18sp"
+        android:textSize="28sp"
+        android:textStyle="bold|italic"
+        android:textColor="#F5F5DC"
+        android:shadowColor="#88000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:rotation="-5"
+        android:padding="8dp"
+        android:background="#6B8E23"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/cakeDescription"
+        app:layout_constraintTop_toBottomOf="@id/nameDescFrame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <TextView
-        android:id="@+id/ingredientsText"
+    <FrameLayout
+        android:id="@+id/ingredientsFrame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ингредиенты"
-        android:textSize="16sp"
-        android:layout_marginTop="20dp"
+        android:background="#6B8E23"
+        android:padding="10dp"
+        android:elevation="2dp"
         app:layout_constraintTop_toBottomOf="@id/cakePrice"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/ingredientsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingridients"
+            android:textColor="#F5F5DC"
+            android:textStyle="italic"
+            android:textSize="16sp"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
 
     <Button
         android:id="@+id/btn_order"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Заказать"
-        android:backgroundTint="#800000"
-        android:textColor="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@id/ingredientsText"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="Bring It!"
+        android:backgroundTint="#D81B60"
+        android:textColor="#FFF8E1"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:rotation="5"
+        android:elevation="8dp"
+        app:cornerRadius="30dp"
+        app:layout_constraintTop_toBottomOf="@id/ingredientsFrame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 

@@ -42,7 +42,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         if (ingredient != null) {
             holder.ingredientName.setText(ingredient.getName());
             holder.ingredientPrice.setText(ingredient.getPrice() + " ₽");
-            holder.actionButton.setText(isSelected ? "Убрать" : "Добавить");
+            holder.actionButton.setText(isSelected ? "remove" : "add");
 
             holder.actionButton.setOnClickListener(v -> {
                 if (isSelected) {
