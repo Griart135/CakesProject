@@ -27,13 +27,13 @@ public class CustomActivity extends AppCompatActivity {
 
     private List<String> selectedIngredients = new ArrayList<>();
     private List<Cake> cakeList = Arrays.asList(
-            new Cake("Шоколадный торт", R.drawable.nostalgy, Arrays.asList("Шоколад", "Мука", "Сахар")),
-            new Cake("Ванильный торт", R.drawable.cheesecake, Arrays.asList("Ваниль", "Мука", "Сахар")),
-            new Cake("Карамельный торт", R.drawable.choco_straw1, Arrays.asList("Карамель", "Мука", "Сахар")),
-            new Cake("Медовик", R.drawable.nostalgy, Arrays.asList("Шоколад", "Мука", "Сахар")),
-            new Cake("Сахарный диабет торт", R.drawable.cheesecake, Arrays.asList("Ваниль", "Мука", "Сахар")),
-            new Cake("Просто торт", R.drawable.choco_straw1, Arrays.asList("Мед","Карамель","Сахар",
-                    "Хориз", "Мука", "Шоколад", "Ваниль"))
+            new Cake("Chocolate cake", R.drawable.nostalgy, Arrays.asList("Chocolate", "Drough", "Sugar")),
+            new Cake("Vanila cake", R.drawable.cheesecake, Arrays.asList("Vanile", "Drough", "Sugar")),
+            new Cake("Caramel fantasy", R.drawable.choco_straw1, Arrays.asList("Caramel", "Drough", "Sugar")),
+            new Cake("Honey dream", R.drawable.nostalgy, Arrays.asList("Chocolate", "Drough", "Sugar")),
+            new Cake("Sweet cake", R.drawable.cheesecake, Arrays.asList("Vanile", "Drough", "Sugar")),
+            new Cake("Ordinary cake", R.drawable.choco_straw1, Arrays.asList("Honey","Caramel","Sugar",
+                    "Khoriz", "Drough", "Chocolate", "Vanile"))
     );
 
     @Override
@@ -63,7 +63,7 @@ public class CustomActivity extends AppCompatActivity {
 
         IngredientAdapter adapter = new IngredientAdapter(ingredients, this::updateCakePreview);
         ingredientsList.setAdapter(adapter);
-        ingredientsList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        ingredientsList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         cakeAdapter = new CakeAdapter(new ArrayList<>());
         cakesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));

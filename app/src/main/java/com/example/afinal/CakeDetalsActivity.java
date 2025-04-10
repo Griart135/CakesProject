@@ -3,14 +3,27 @@ package com.example.afinal;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.util.Arrays;
 
 public class CakeDetalsActivity extends AppCompatActivity {
+
+    private ImageView cakeImage;
+    private TextView cakeNameText;
+    private TextView cakeDescriptionText;
+    private TextView cakePrice;
+    private TextView ingredientsText;
+    private TextView deliveryTime;
+    private Button btnOrder;
+    private Button btnCakeInfo;
+    private Button btnAddToFavorites;
+    private boolean isFavorite = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +48,55 @@ public class CakeDetalsActivity extends AppCompatActivity {
             return;
         }
 
-        ImageView cakeImage = findViewById(R.id.cakeImage);
-        TextView cakeNameText = findViewById(R.id.cakeName);
-        TextView cakeDescriptionText = findViewById(R.id.cakeDescription);
-        TextView cakePrice = findViewById(R.id.cakePrice);
-        TextView ingredientsText = findViewById(R.id.ingredientsText);
-        Button orderButton = findViewById(R.id.btn_order);
+        cakeImage = findViewById(R.id.cakeImage);
+        cakeNameText = findViewById(R.id.cakeName);
+        cakeDescriptionText = findViewById(R.id.cakeDescription);
+        cakePrice = findViewById(R.id.cakePrice);
+        ingredientsText = findViewById(R.id.ingredientsText);
+        deliveryTime = findViewById(R.id.deliveryTime);
+        btnOrder = findViewById(R.id.btn_order);
+        btnCakeInfo = findViewById(R.id.btn_cake_info);
+        btnAddToFavorites = findViewById(R.id.btn_add_to_favorites);
 
-        orderButton.setOnClickListener(v -> {
-            Intent intent = new Intent(CakeDetalsActivity.this, OrderActivity.class);
-            intent.putExtra("ImageResId", imageResId);
-            intent.putExtra("cake_name", cakeName);
-            startActivity(intent);
+        setupCakeData(imageResId, cakeName, cakeDescription, price, ingredients);
+
+        btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CakeDetalsActivity.this, OrderActivity.class);
+                intent.putExtra("ImageResId", imageResId);
+                intent.putExtra("cake_name", cakeName);
+                startActivity(intent);
+                deliveryTime.setText("Order placed! Ready in 45 min");
+            }
         });
 
+        btnCakeInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("CakeDetalsActivity", "Cake Info button clicked");
+                CakeInfoDialogFragment dialog = new CakeInfoDialogFragment();
+                Bundle args = new Bundle();
+                args.putString("cakeName", cakeName);
+                args.putStringArray("ingredients", ingredients);
+                dialog.setArguments(args);
+                dialog.show(getSupportFragmentManager(), "CakeInfoDialog");
+            }
+        });
 
+        btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleFavorite();
+            }
+        });
+    }
+
+    private void setupCakeData(int imageResId, String cakeName, String cakeDescription, int price, String[] ingredients) {
         cakeImage.setImageResource(imageResId);
         cakeNameText.setText(cakeName);
         cakeDescriptionText.setText(cakeDescription);
-        cakePrice.setText(String.format("Цена: %d ₽", price));
+        cakePrice.setText(String.format("Price: %d ₽", price));
 
         StringBuilder ingredientsList = new StringBuilder();
         if (ingredients != null && ingredients.length > 0) {
@@ -64,8 +107,20 @@ public class CakeDetalsActivity extends AppCompatActivity {
             ingredientsList.append("Ингредиенты не указаны.");
         }
         ingredientsText.setText(ingredientsList.toString());
+
+        deliveryTime.setText("Ready in 45 min");
+    }
+
+    private void toggleFavorite() {
+        isFavorite = !isFavorite;
+        if (isFavorite) {
+            btnAddToFavorites.setText("★ Favorited");
+            btnAddToFavorites.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.black));
+        } else {
+            btnAddToFavorites.setText("★ Add to Favorites");
+            btnAddToFavorites.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.black));
+        }
     }
 }
-
 
 

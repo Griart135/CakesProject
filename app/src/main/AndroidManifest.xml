@@ -33,5 +33,4 @@
         <activity android:name=".FavoritesActivity"/>
         <activity android:name=".CartActivity"/>
     </application>
-
 </manifest>

@@ -37,6 +37,8 @@ dependencies {
     implementation libs.activity
     implementation libs.constraintlayout
     implementation libs.recyclerview
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.fragment:fragment:1.6.2'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation libs.firebase.firestore
 //    implementation 'com.google.firebase:firebase-auth:22.3.1'
