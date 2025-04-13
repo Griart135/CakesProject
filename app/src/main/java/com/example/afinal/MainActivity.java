@@ -8,9 +8,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -28,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView categoryChocolate, categoryHoney, categoryBerry, categoryCaramel, categoryVanilla;
     private ImageView iconFavorite, iconCart, iconShare, iconProfile;
     private RecyclerView productGrid;
-
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
     private ProductAdapter productAdapter;
     private List<Product> allProducts = new ArrayList<>();
     private List<Product> favoriteCakes = new ArrayList<>();
@@ -40,6 +45,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         db = FirebaseFirestore.getInstance();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        ImageView menuIcon = findViewById(R.id.menu_icon);
+        menuIcon.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
+                Toast.makeText(this, "Главная", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_custom) {
+                startActivity(new Intent(this, CustomActivity.class));
+            } else if (id == R.id.nav_profile) {
+                Toast.makeText(this, "Профиль", Toast.LENGTH_SHORT).show();
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
+
+        initViews();
+        setupProductList();
 
 
         db.collection("cakes")
@@ -193,6 +225,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void openCustomActivity() {
         startActivity(new Intent(this, CustomActivity.class));
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
 

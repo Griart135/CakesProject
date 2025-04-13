@@ -14,7 +14,7 @@
         android:text="Your Custom Cake"
         android:textSize="28sp"
         android:textStyle="bold|italic"
-        android:textColor="#D81B60"
+        android:textColor="#B22222"
         android:shadowColor="#88000000"
         android:shadowDx="2"
         android:shadowDy="2"
@@ -68,9 +68,9 @@
                 android:id="@+id/order_height_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Высота: 10 см"
+                android:text="Height: 10 см"
                 android:textSize="16sp"
-                android:textColor="#D81B60"
+                android:textColor="#B22222"
                 android:textStyle="bold"/>
 
             <SeekBar
@@ -79,8 +79,8 @@
                 android:layout_height="wrap_content"
                 android:max="45"
                 android:progress="10"
-                android:thumbTint="#D81B60"
-                android:progressTint="#D81B60"
+                android:thumbTint="#B22222"
+                android:progressTint="#B22222"
                 android:rotation="2"/>
         </LinearLayout>
 
@@ -95,9 +95,9 @@
                 android:id="@+id/order_radius_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Радиус: 20 см"
+                android:text="Radius: 20 см"
                 android:textSize="16sp"
-                android:textColor="#D81B60"
+                android:textColor="#B22222"
                 android:textStyle="bold"/>
 
             <SeekBar
@@ -106,8 +106,8 @@
                 android:layout_height="wrap_content"
                 android:max="25"
                 android:progress="20"
-                android:thumbTint="#D81B60"
-                android:progressTint="#D81B60"
+                android:thumbTint="#B22222"
+                android:progressTint="#B22222"
                 android:rotation="-2"/>
         </LinearLayout>
     </LinearLayout>
@@ -128,9 +128,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Куски:"
+            android:text="Slices :"
             android:textSize="16sp"
-            android:textColor="#D81B60"
+            android:textColor="#B22222"
             android:textStyle="bold"
             android:layout_marginEnd="12dp"/>
 
@@ -144,7 +144,7 @@
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:text="OK"
-            android:backgroundTint="#D81B60"
+            android:backgroundTint="#B22222"
             android:textColor="#FFF8E1"
             android:textSize="14sp"
             android:padding="4dp"
@@ -159,7 +159,7 @@
             android:layout_height="wrap_content"
             android:text="1"
             android:textSize="16sp"
-            android:textColor="#D81B60"
+            android:textColor="#B22222"
             android:textStyle="bold"
             android:layout_marginStart="12dp"/>
     </LinearLayout>
@@ -168,11 +168,11 @@
         android:id="@+id/address_input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Введите ваш адрес"
+        android:hint="Enter your adress"
         android:inputType="textPostalAddress"
         android:padding="12dp"
         android:background="@drawable/rounded_rect_background"
-        android:textColor="#D81B60"
+        android:textColor="#B22222"
         android:textColorHint="#80D81B60"
         android:textSize="16sp"
         android:layout_marginTop="20dp"
@@ -197,8 +197,8 @@
             android:layout_height="60dp"
             android:layout_weight="1"
             android:text="Confirm"
-            android:backgroundTint="#D81B60"
-            android:textColor="#FFF8E1"
+            android:backgroundTint="#B22222"
+            android:textColor="#F5F5DC"
             android:textSize="18sp"
             android:textStyle="bold"
             android:padding="10dp"
@@ -213,8 +213,8 @@
             android:layout_height="60dp"
             android:layout_weight="1"
             android:text="Clear"
-            android:backgroundTint="#D81B60"
-            android:textColor="#FFF8E1"
+            android:backgroundTint="#B22222"
+            android:textColor="#F5F5DC"
             android:textSize="18sp"
             android:textStyle="bold"
             android:padding="10dp"

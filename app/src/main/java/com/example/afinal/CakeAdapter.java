@@ -7,13 +7,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.CakeViewHolder> {
     private List<Cake> cakes;
 
     public CakeAdapter(List<Cake> cakes) {
-        this.cakes = cakes;
+        this.cakes = new ArrayList<>();
+        if (cakes != null) {
+            this.cakes.addAll(cakes);
+        }
     }
 
     @NonNull
@@ -34,14 +38,15 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.CakeViewHolder
 
     @Override
     public int getItemCount() {
-        return cakes != null ? cakes.size() : 0;
+        return cakes.size();
     }
 
-    public void updateCakes(List<Cake> cakes) {
-        if (cakes != null) {
-            this.cakes = cakes;
-            notifyDataSetChanged();
+    public void updateCakes(List<Cake> newCakes) {
+        this.cakes.clear();
+        if (newCakes != null) {
+            this.cakes.addAll(newCakes);
         }
+        notifyDataSetChanged();
     }
 
     public void addCake(Cake cake) {
@@ -59,10 +64,9 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.CakeViewHolder
     }
 
     public void clearCakes() {
-        if (cakes != null && !cakes.isEmpty()) {
-            cakes.clear();
-            notifyDataSetChanged();
-        }
+        int size = cakes.size();
+        cakes.clear();
+        notifyItemRangeRemoved(0, size);
     }
 
     public static class CakeViewHolder extends RecyclerView.ViewHolder {

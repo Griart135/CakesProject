@@ -1,193 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5DC"
-    android:padding="16dp">
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
-        android:id="@+id/topBar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="#800000"
-        android:padding="10dp"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AvanyanCakes"
-            android:textSize="24sp"
-            android:textColor="#F5F5DC"
-            android:textStyle="bold"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/categoriesList"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.75"
-        android:orientation="vertical"
-        android:background="#FFF8E1"
-        android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@id/topBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/actionIcons"
-        android:layout_marginTop="20dp"
-        android:elevation="4dp">
-
-        <TextView
-            android:id="@+id/categoryChocolate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Chocolate Cakes"
-            android:textSize="18sp"
-            android:textColor="#800000"
-            android:padding="8dp"
-            android:background="?android:attr/selectableItemBackground"/>
-
-        <TextView
-            android:id="@+id/categoryHoney"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Honey Cakes"
-            android:textSize="18sp"
-            android:textColor="#800000"
-            android:padding="8dp"
-            android:background="?android:attr/selectableItemBackground"/>
-
-        <TextView
-            android:id="@+id/categoryBerry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Berry cakes"
-            android:textSize="18sp"
-            android:textColor="#800000"
-            android:padding="8dp"
-            android:background="?android:attr/selectableItemBackground"/>
-
-        <TextView
-            android:id="@+id/categoryCaramel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Bento cakes"
-            android:textSize="18sp"
-            android:textColor="#800000"
-            android:padding="8dp"
-            android:background="?android:attr/selectableItemBackground"/>
-
-        <TextView
-            android:id="@+id/categoryVanilla"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Other sweets"
-            android:textSize="18sp"
-            android:textColor="#800000"
-            android:padding="8dp"
-            android:background="?android:attr/selectableItemBackground"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/actionIcons"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.25"
-        android:orientation="vertical"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/topBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/categoriesList"
-        android:layout_marginTop="20dp">
-
-        <ImageView
-            android:id="@+id/iconFavorite"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@android:drawable/btn_star_big_off"
-            android:contentDescription="Add to Favorites"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_marginBottom="16dp"/>
-
-        <ImageView
-            android:id="@+id/iconCart"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@android:drawable/ic_menu_add"
-            android:contentDescription="Add to Cart"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_marginBottom="16dp"/>
-
-        <ImageView
-            android:id="@+id/iconShare"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@android:drawable/ic_menu_share"
-            android:contentDescription="Share"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_marginBottom="16dp"/>
-
-        <ImageView
-            android:id="@+id/iconProfile"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@android:drawable/ic_menu_manage"
-            android:contentDescription="Profile"
-            android:clickable="true"
-            android:focusable="true"/>
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/productGrid"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/categoriesList"
-        app:layout_constraintBottom_toTopOf="@id/footer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:scrollbars="vertical"/>
-
-    <LinearLayout
-        android:id="@+id/footer"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="#800000"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5DC"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/iconHome"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/cakeicon4"
-            android:contentDescription="Home Icon"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_margin="16dp"/>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#800000"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="#F5F5DC">
 
-        <ImageView
-            android:id="@+id/iconGoToCustom"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/piece4"
-            android:contentDescription="Custom Activity Icon"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_margin="16dp"/>
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/menu_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_sort_by_size"
+                android:contentDescription="Open menu"
+                android:layout_gravity="start"/>
+        </androidx.appcompat.widget.Toolbar>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="#800000"
+            android:padding="10dp"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AvanyanCakes"
+                android:textSize="24sp"
+                android:textColor="#F5F5DC"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/categoriesList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFF8E1"
+            android:padding="10dp"
+            app:layout_constraintTop_toBottomOf="@id/topBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/actionIcons"
+            android:layout_marginTop="20dp"
+            android:elevation="4dp">
+
+            <TextView
+                android:id="@+id/categoryChocolate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chocolate Cakes"
+                android:textSize="18sp"
+                android:textColor="#800000"
+                android:padding="8dp"
+                android:background="?android:attr/selectableItemBackground"/>
+
+            <TextView
+                android:id="@+id/categoryHoney"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Honey Cakes"
+                android:textSize="18sp"
+                android:textColor="#800000"
+                android:padding="8dp"
+                android:background="?android:attr/selectableItemBackground"/>
+
+            <TextView
+                android:id="@+id/categoryBerry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Berry Cakes"
+                android:textSize="18sp"
+                android:textColor="#800000"
+                android:padding="8dp"
+                android:background="?android:attr/selectableItemBackground"/>
+
+            <TextView
+                android:id="@+id/categoryCaramel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bento Cakes"
+                android:textSize="18sp"
+                android:textColor="#800000"
+                android:padding="8dp"
+                android:background="?android:attr/selectableItemBackground"/>
+
+            <TextView
+                android:id="@+id/categoryVanilla"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Other Sweets"
+                android:textSize="18sp"
+                android:textColor="#800000"
+                android:padding="8dp"
+                android:background="?android:attr/selectableItemBackground"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/actionIcons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/topBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/categoriesList"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:id="@+id/iconFavorite"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/btn_star_big_off"
+                android:contentDescription="Add to Favorites"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginBottom="16dp"/>
+
+            <ImageView
+                android:id="@+id/iconCart"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_add"
+                android:contentDescription="Add to Cart"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginBottom="16dp"/>
+
+            <ImageView
+                android:id="@+id/iconShare"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_share"
+                android:contentDescription="Share"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginBottom="16dp"/>
+
+            <ImageView
+                android:id="@+id/iconProfile"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_manage"
+                android:contentDescription="Profile"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/productGrid"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/categoriesList"
+            app:layout_constraintBottom_toTopOf="@id/footer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
+            android:scrollbars="vertical"/>
+
+        <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="#800000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iconHome"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/cakeicon4"
+                android:contentDescription="Home Icon"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_margin="16dp"/>
+
+            <ImageView
+                android:id="@+id/iconGoToCustom"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/piece4"
+                android:contentDescription="Custom Activity Icon"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_margin="16dp"/>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>
 

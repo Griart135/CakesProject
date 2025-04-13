@@ -1,5 +1,6 @@
 package com.example.afinal;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
@@ -45,6 +46,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
             holder.actionButton.setText(isSelected ? "remove" : "add");
 
             holder.actionButton.setOnClickListener(v -> {
+                Log.d("IngredientAdapter", "Clicked: " + ingredient.getName() + ", isAdding: " + !isSelected);
                 if (isSelected) {
                     selectedIngredients.remove(ingredient);
                     listener.onIngredientChange(ingredient, false);
@@ -55,6 +57,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
                 notifyItemChanged(position);
             });
         } else {
+            Log.e("IngredientAdapter", "Ingredient at position " + position + " is null");
             holder.ingredientName.setText("Неизвестный ингредиент");
             holder.ingredientPrice.setText("0 ₽");
             holder.actionButton.setText("Добавить");
@@ -63,7 +66,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     @Override
     public int getItemCount() {
-        return ingredients.size();
+        return ingredients != null ? ingredients.size() : 0;
     }
 
     public static class IngredientViewHolder extends RecyclerView.ViewHolder {

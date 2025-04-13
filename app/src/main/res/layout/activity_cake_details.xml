@@ -135,7 +135,7 @@
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:text="Bring It!"
-        android:backgroundTint="#D81B60"
+        android:backgroundTint="#B22222"
         android:textColor="#FFF8E1"
         android:textSize="18sp"
         android:textStyle="bold"
