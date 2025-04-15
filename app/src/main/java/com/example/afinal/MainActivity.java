@@ -2,38 +2,33 @@ package com.example.afinal;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
-
     private FirebaseFirestore db;
-
-    private TextView categoryChocolate, categoryHoney, categoryBerry, categoryCaramel, categoryVanilla;
-    private ImageView iconFavorite, iconCart, iconShare, iconProfile;
-    private RecyclerView productGrid;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private TextView categoryChocolate, categoryHoney, categoryBerry, categoryCaramel, categoryVanilla;
+    private ImageView iconFavorite, iconCart, iconShare, iconProfile;
+    private EditText searchBar;
+    private RecyclerView productGrid;
     private ProductAdapter productAdapter;
     private List<Product> allProducts = new ArrayList<>();
     private List<Product> favoriteCakes = new ArrayList<>();
@@ -73,24 +68,6 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         setupProductList();
 
-
-        db.collection("cakes")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        QuerySnapshot querySnapshot = task.getResult();
-                        for (QueryDocumentSnapshot document : querySnapshot) {
-                            String name = document.getString("name");
-                            Long price = document.getLong("price");
-                            Log.d("Firestore", "Document: " + name + ", Price: " + price);
-                        }
-                    }
-                });
-
-        initViews();
-
-        setupProductList();
-
         productAdapter = new ProductAdapter(this, allProducts, this::openProductDetails, new ProductAdapter.OnProductActionListener() {
             @Override
             public void onAddToFavorites(Product product) {
@@ -112,6 +89,18 @@ public class MainActivity extends AppCompatActivity {
         productGrid.setAdapter(productAdapter);
 
         setupClickListeners();
+
+        db.collection("cakes").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                task.getResult().forEach(document -> {
+                    String name = document.getString("name");
+                    Long price = document.getLong("price");
+                    Log.d("Firestore", "Document: " + name + ", Price: " + price);
+                });
+            } else {
+                Log.e("Firestore", "Error getting cakes", task.getException());
+            }
+        });
     }
 
     private void initViews() {
@@ -120,27 +109,42 @@ public class MainActivity extends AppCompatActivity {
         categoryBerry = findViewById(R.id.categoryBerry);
         categoryCaramel = findViewById(R.id.categoryCaramel);
         categoryVanilla = findViewById(R.id.categoryVanilla);
-
         iconFavorite = findViewById(R.id.iconFavorite);
         iconCart = findViewById(R.id.iconCart);
         iconShare = findViewById(R.id.iconShare);
         iconProfile = findViewById(R.id.iconProfile);
-
+        searchBar = findViewById(R.id.search_bar);
         productGrid = findViewById(R.id.productGrid);
+
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                List<Product> filtered = allProducts.stream()
+                        .filter(p -> p.getName().toLowerCase().contains(s.toString().toLowerCase()))
+                        .collect(Collectors.toList());
+                productAdapter.updateProducts(filtered);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
     }
 
     private void setupProductList() {
         allProducts.add(new Product("Chocolate Cake", R.drawable.choco_straw1, "Шоколадный торт", 500,
                 new String[]{"Шоколад", "Какао", "Сливки"}));
-        allProducts.add(new Product("Strawberry Cake", R.drawable.straw1, "Клубничный торт", 550,
+        allProducts.add(new Product("Milk girl", R.drawable.milk_girl, "Клубничный торт", 550,
                 new String[]{"Клубника", "Сахар", "Творожный сыр"}));
-        allProducts.add(new Product("Banana Cake", R.drawable.cheesecake, "Банановый торт", 520,
+        allProducts.add(new Product("Cheesecake", R.drawable.cheesecake, "Банановый торт", 520,
                 new String[]{"Банан", "Шоколад", "Крем"}));
-        allProducts.add(new Product("Vanilla Cake", R.drawable.nostalgy, "Ванильный торт", 480,
+        allProducts.add(new Product("Nostalgy", R.drawable.nostalgy, "Ванильный торт", 480,
                 new String[]{"Ваниль", "Мука", "Масло"}));
-        allProducts.add(new Product("Berry Cake", R.drawable.choco_straw1, "Ягодный торт", 530,
+        allProducts.add(new Product("Beze Cake", R.drawable.beze, "Ягодный торт", 530,
                 new String[]{"Ягоды", "Мука", "Крем"}));
-        allProducts.add(new Product("Caramel Cake", R.drawable.nostalgy, "Карамельный торт", 510,
+        allProducts.add(new Product("Birthday Cake", R.drawable.birthday_cake, "Карамельный торт", 510,
                 new String[]{"Карамель", "Мука", "Крем"}));
     }
 
@@ -164,40 +168,26 @@ public class MainActivity extends AppCompatActivity {
         });
 
         iconShare.setOnClickListener(v -> shareApp());
-        iconProfile.setOnClickListener(v -> goToProfile());
-
-        findViewById(R.id.iconGoToCustom).setOnClickListener(v -> openCustomActivity());
+        iconProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        });
+        findViewById(R.id.iconGoToCustom).setOnClickListener(v -> startActivity(new Intent(this, CustomActivity.class)));
     }
 
     private void filterProducts(String category) {
-        List<Product> filtered = new ArrayList<>();
-        switch (category) {
-            case "Chocolate Cakes":
-                filtered = allProducts.stream()
-                        .filter(p -> p.getDescription().contains("Шоколадный"))
-                        .collect(Collectors.toList());
-                break;
-            case "Honey Cakes":
-                filtered = allProducts.stream()
-                        .filter(p -> p.getDescription().contains("Медовый"))
-                        .collect(Collectors.toList());
-                break;
-            case "Berry Cakes":
-                filtered = allProducts.stream()
-                        .filter(p -> p.getDescription().contains("Ягодный"))
-                        .collect(Collectors.toList());
-                break;
-            case "Bento Cakes":
-                filtered = allProducts.stream()
-                        .filter(p -> p.getDescription().contains("Карамельный"))
-                        .collect(Collectors.toList());
-                break;
-            case "Other Sweets":
-                filtered = allProducts.stream()
-                        .filter(p -> p.getDescription().contains("Ванильный"))
-                        .collect(Collectors.toList());
-                break;
-        }
+        List<Product> filtered = allProducts.stream()
+                .filter(p -> {
+                    switch (category) {
+                        case "Chocolate Cakes": return p.getDescription().contains("Шоколадный");
+                        case "Honey Cakes": return p.getDescription().contains("Медовый");
+                        case "Berry Cakes": return p.getDescription().contains("Ягодный");
+                        case "Bento Cakes": return p.getDescription().contains("Карамельный");
+                        case "Other Sweets": return p.getDescription().contains("Ванильный");
+                        default: return true;
+                    }
+                })
+                .collect(Collectors.toList());
         productAdapter.updateProducts(filtered);
         Toast.makeText(this, "Выбрана категория: " + category, Toast.LENGTH_SHORT).show();
     }
@@ -209,10 +199,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(intent, "Поделиться"));
     }
 
-    private void goToProfile() {
-        Toast.makeText(this, "Переход в профиль (заглушка)", Toast.LENGTH_SHORT).show();
-    }
-
     private void openProductDetails(Product product) {
         Intent intent = new Intent(this, CakeDetalsActivity.class);
         intent.putExtra("imageResId", product.getImageResId());
@@ -221,10 +207,6 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("price", product.getPrice());
         intent.putExtra("ingredients", product.getIngredients());
         startActivity(intent);
-    }
-
-    private void openCustomActivity() {
-        startActivity(new Intent(this, CustomActivity.class));
     }
 
     @Override

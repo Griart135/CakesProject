@@ -28,6 +28,17 @@
                 android:src="@android:drawable/ic_menu_sort_by_size"
                 android:contentDescription="Open menu"
                 android:layout_gravity="start"/>
+
+            <EditText
+                android:id="@+id/search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="finding cakes"
+                android:textColor="#F5F5DC"
+                app:layout_constraintTop_toBottomOf="@id/topBar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp"/>
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
