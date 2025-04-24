@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">final</string>
+    <string name="profile_avatar_description">User profile avatar</string>
+    <string name="view_orders">View Orders</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="logout">Logout</string>
 </resources>

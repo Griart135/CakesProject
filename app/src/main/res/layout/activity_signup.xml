@@ -1,4 +1,4 @@
-<!-- res/layout/activity_signup.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -8,12 +8,25 @@
     android:background="#F5F5DC">
 
     <EditText
+        android:id="@+id/name_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Имя (опционально)"
+        android:inputType="textPersonName"
+        android:padding="12dp"
+        android:textColor="#800000"
+        android:textColorHint="#A0800000"/>
+
+    <EditText
         android:id="@+id/email_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:background="#F5F5DC"/>
+        android:padding="12dp"
+        android:textColor="#800000"
+        android:textColorHint="#A0800000"
+        android:layout_marginTop="8dp"/>
 
     <EditText
         android:id="@+id/password_field"
@@ -21,7 +34,9 @@
         android:layout_height="wrap_content"
         android:hint="Пароль"
         android:inputType="textPassword"
-        android:background="#F5F5DC"
+        android:padding="12dp"
+        android:textColor="#800000"
+        android:textColorHint="#A0800000"
         android:layout_marginTop="8dp"/>
 
     <Button
@@ -31,6 +46,8 @@
         android:text="Зарегистрироваться"
         android:backgroundTint="#800000"
         android:textColor="#F5F5DC"
+        android:textSize="16sp"
+        android:padding="12dp"
         android:layout_marginTop="16dp"/>
 
     <TextView
@@ -39,6 +56,9 @@
         android:layout_height="wrap_content"
         android:text="Уже есть аккаунт? Войти"
         android:textColor="#800000"
+        android:textSize="14sp"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="12dp"
+        android:clickable="true"
+        android:focusable="true"/>
 </LinearLayout>
