@@ -18,6 +18,12 @@ public class ProfileActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         TextView emailView = findViewById(R.id.profile_email);
         Button logoutButton = findViewById(R.id.logout_button);
+        Button editProfile = findViewById(R.id.edit_profile_button);
+
+        editProfile.setOnClickListener(v -> {
+            startActivity(new Intent(this, SignupActivity.class));
+            finish();
+        });
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
             emailView.setText(user.getEmail());

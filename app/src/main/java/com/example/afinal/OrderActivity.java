@@ -71,7 +71,7 @@ public class OrderActivity extends AppCompatActivity {
 
         orderSlicesButton.setOnClickListener(v -> {
             int selectedSlices = slicesPicker.getValue();
-            Toast.makeText(OrderActivity.this, "Вы выбрали " + selectedSlices + " кусочков", Toast.LENGTH_SHORT).show();
+            ToastUtils.showCustomToast(OrderActivity.this, "Вы выбрали " + selectedSlices + " кусочков", Toast.LENGTH_SHORT);
         });
 
         int imageResId = getIntent().getIntExtra("ImageResId", -1);

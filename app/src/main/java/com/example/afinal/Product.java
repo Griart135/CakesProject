@@ -3,12 +3,13 @@ package com.example.afinal;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Product implements Parcelable{
+public class Product implements Parcelable {
     private String name;
     private int imageResId;
     private String description;
     private int price;
     private String[] ingredients;
+
 
     public Product(String name, int imageResId, String description, int price, String[] ingredients) {
         this.name = name;
