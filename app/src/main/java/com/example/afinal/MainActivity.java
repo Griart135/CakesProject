@@ -134,17 +134,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupProductList() {
-        allProducts.add(new Product("Chocolate Cake", R.drawable.choco_straw1, "Шоколадный торт", 500,
+        allProducts.add(new Product("Chocolate Cake", R.drawable.choco_straw1, "Chocolate Cakes", 500,
                 new String[]{"Шоколад", "Какао", "Сливки"}));
-        allProducts.add(new Product("Milk girl", R.drawable.milk_girl, "Клубничный торт", 550,
+        allProducts.add(new Product("Milk girl", R.drawable.milk_girl, "Berry Cakes", 550,
                 new String[]{"Клубника", "Сахар", "Творожный сыр"}));
-        allProducts.add(new Product("Cheesecake", R.drawable.cheesecake, "Банановый торт", 520,
+        allProducts.add(new Product("Cheesecake", R.drawable.cheesecake, "Other Cakes", 520,
                 new String[]{"Банан", "Шоколад", "Крем"}));
-        allProducts.add(new Product("Nostalgy", R.drawable.nostalgy, "Ванильный торт", 480,
+        allProducts.add(new Product("Nostalgy", R.drawable.nostalgy, "Chocolate Cakes", 480,
                 new String[]{"Ваниль", "Мука", "Масло"}));
-        allProducts.add(new Product("Beze Cake", R.drawable.beze, "Ягодный торт", 530,
+        allProducts.add(new Product("Beze Cake", R.drawable.beze, "Berry Cakes", 530,
                 new String[]{"Ягоды", "Мука", "Крем"}));
-        allProducts.add(new Product("Birthday Cake", R.drawable.birthday_cake, "Карамельный торт", 510,
+        allProducts.add(new Product("Birthday Cake", R.drawable.birthday_cake, "Caramel Cakes", 510,
+                new String[]{"Карамель", "Мука", "Крем"}));
+        allProducts.add(new Product("Nostalgy", R.drawable.tart_nut, "Other Sweets", 480,
+                new String[]{"Ваниль", "Мука", "Масло"}));
+        allProducts.add(new Product("Beze Cake", R.drawable.tart_trad, "Other Sweets", 530,
+                new String[]{"Ягоды", "Мука", "Крем"}));
+        allProducts.add(new Product("Birthday Cake", R.drawable.tart_wheart, "Other Sweets", 510,
+                new String[]{"Карамель", "Мука", "Крем"}));
+        allProducts.add(new Product("Birthday Cake", R.drawable.pakhlava, "Other Sweets", 510,
+                new String[]{"Карамель", "Мука", "Крем"}));
+        allProducts.add(new Product("Beze Cake", R.drawable.nut_cookie, "Other Sweets", 530,
+                new String[]{"Ягоды", "Мука", "Крем"}));
+        allProducts.add(new Product("Birthday Cake", R.drawable.cookie, "Other Sweets", 510,
+                new String[]{"Карамель", "Мука", "Крем"}));
+        allProducts.add(new Product("Birthday Cake", R.drawable.cookie_heart, "Other Sweets", 510,
+                new String[]{"Карамель", "Мука", "Крем"}));
+        allProducts.add(new Product("Birthday Cake", R.drawable.eclair_nt, "Other Sweets", 510,
                 new String[]{"Карамель", "Мука", "Крем"}));
     }
 
@@ -179,11 +195,11 @@ public class MainActivity extends AppCompatActivity {
         List<Product> filtered = allProducts.stream()
                 .filter(p -> {
                     switch (category) {
-                        case "Chocolate Cakes": return p.getDescription().contains("Шоколадный");
-                        case "Honey Cakes": return p.getDescription().contains("Медовый");
-                        case "Berry Cakes": return p.getDescription().contains("Ягодный");
-                        case "Bento Cakes": return p.getDescription().contains("Карамельный");
-                        case "Other Sweets": return p.getDescription().contains("Ванильный");
+                        case "Chocolate Cakes": return p.getDescription().contains("Chocolate Cakes");
+                        case "Honey Cakes": return p.getDescription().contains("Honey Cakes");
+                        case "Berry Cakes": return p.getDescription().contains("Berry Cakes");
+                        case "Bento Cakes": return p.getDescription().contains("Bento Cakes");
+                        case "Other Sweets": return p.getDescription().contains("Other Sweets");
                         default: return true;
                     }
                 })

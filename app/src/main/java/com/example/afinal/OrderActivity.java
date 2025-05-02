@@ -31,6 +31,7 @@ public class OrderActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private EditText addressInput;
 
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,6 +196,14 @@ public class OrderActivity extends AppCompatActivity {
         return orderData;
     }
 }
+
+
+
+
+
+
+
+
 
 
 

@@ -19,7 +19,12 @@ public class ProfileActivity extends AppCompatActivity {
         TextView emailView = findViewById(R.id.profile_email);
         Button logoutButton = findViewById(R.id.logout_button);
         Button editProfile = findViewById(R.id.edit_profile_button);
+        Button historyOrders = findViewById(R.id.orders_button);
 
+        historyOrders.setOnClickListener(v -> {
+            startActivity(new Intent(this, OrdersHistoryActivity.class));
+            finish();
+        });
         editProfile.setOnClickListener(v -> {
             startActivity(new Intent(this, SignupActivity.class));
             finish();
