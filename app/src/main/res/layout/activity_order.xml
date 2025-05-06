@@ -68,7 +68,7 @@
                 android:id="@+id/order_height_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Height: 10 см"
+                android:text="Height: 10 cm"
                 android:textSize="16sp"
                 android:textColor="#B22222"
                 android:textStyle="bold"/>
@@ -95,7 +95,7 @@
                 android:id="@+id/order_radius_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Radius: 20 см"
+                android:text="Radius: 20 cm"
                 android:textSize="16sp"
                 android:textColor="#B22222"
                 android:textStyle="bold"/>

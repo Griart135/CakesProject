@@ -27,12 +27,12 @@ public class CustomActivity extends AppCompatActivity {
 
     private List<String> selectedIngredients = new ArrayList<>();
     private List<Cake> cakeList = Arrays.asList(
-            new Cake("Шоколадный торт", R.drawable.nostalgy, Arrays.asList("Шоколад", "Мука", "Сахар")),
-            new Cake("Ванильный торт", R.drawable.cheesecake, Arrays.asList("Ваниль", "Мука", "Сахар")),
-            new Cake("Карамельный торт", R.drawable.choco_straw1, Arrays.asList("Карамель", "Мука", "Сахар")),
-            new Cake("Медовый торт", R.drawable.nostalgy, Arrays.asList("Мед", "Мука", "Сахар")),
-            new Cake("Ягодный торт", R.drawable.cheesecake, Arrays.asList("Ягоды", "Мука", "Сахар")),
-            new Cake("Обычный торт", R.drawable.choco_straw1, Arrays.asList("Мед", "Карамель", "Сахар", "Хориз", "Мука", "Шоколад", "Ваниль"))
+            new Cake("Nostalgy", R.drawable.nostalgy, Arrays.asList("Chocolate", "Dough", "Sugar")),
+            new Cake("Cheesecake", R.drawable.cheesecake, Arrays.asList("Vanile", "Dough", "Sugar")),
+            new Cake("Caramel Cake", R.drawable.choco_straw1, Arrays.asList("Caramel", "Dough", "Sugar")),
+            new Cake("Honey Cake", R.drawable.nostalgy, Arrays.asList("Honey", "Dough", "Sugar")),
+            new Cake("Berry Cake", R.drawable.cheesecake, Arrays.asList("Berries", "Dough", "Sugar")),
+            new Cake("Just cake", R.drawable.choco_straw1, Arrays.asList("Honey", "Caramel", "Sugar", "Khoriz", "Dough", "Chocolate", "Vanile"))
     );
 
     @Override
@@ -57,12 +57,12 @@ public class CustomActivity extends AppCompatActivity {
 
         RecyclerView ingredientsList = findViewById(R.id.ingredients_list);
         List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("Шоколад", 50),
-                new Ingredient("Ваниль", 40),
-                new Ingredient("Карамель", 60),
-                new Ingredient("Сахар", 50),
-                new Ingredient("Хориз", 40),
-                new Ingredient("Мед", 60)
+                new Ingredient("Chocolate", 50),
+                new Ingredient("Vanile", 40),
+                new Ingredient("Caramel", 60),
+                new Ingredient("Sugar", 50),
+                new Ingredient("Khoriz", 40),
+                new Ingredient("Honey", 60)
         );
 
         IngredientAdapter adapter = new IngredientAdapter(ingredients, this::updateCakePreview);
@@ -98,7 +98,7 @@ public class CustomActivity extends AppCompatActivity {
             }
             totalPrice -= ingredient.getPrice();
         }
-        totalPriceText.setText("Цена: " + totalPrice + " ₽");
+        totalPriceText.setText("Price: " + totalPrice + " ₽");
         Log.d("CustomActivity", "Selected ingredients: " + selectedIngredients);
 
         filterCakesByIngredients();
@@ -113,7 +113,7 @@ public class CustomActivity extends AppCompatActivity {
         cakeAdapter.updateCakes(filteredCakes);
 
         if (filteredCakes.isEmpty()) {
-            totalPriceText.setText("Нет подходящих тортов");
+            totalPriceText.setText("No cake ... ");
         }
     }
 }

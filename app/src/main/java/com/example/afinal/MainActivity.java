@@ -135,33 +135,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupProductList() {
         allProducts.add(new Product("Chocolate Cake", R.drawable.choco_straw1, "Chocolate Cakes", 500,
-                new String[]{"Шоколад", "Какао", "Сливки"}));
+                new String[]{"Chocolate", "Cacao", "Cream"}));
         allProducts.add(new Product("Milk girl", R.drawable.milk_girl, "Berry Cakes", 550,
-                new String[]{"Клубника", "Сахар", "Творожный сыр"}));
+                new String[]{"Strawberry", "Sugar", "Cottage cheese"}));
         allProducts.add(new Product("Cheesecake", R.drawable.cheesecake, "Other Cakes", 520,
-                new String[]{"Банан", "Шоколад", "Крем"}));
+                new String[]{"Creamcheese", "Chocolate", "Cream"}));
         allProducts.add(new Product("Nostalgy", R.drawable.nostalgy, "Chocolate Cakes", 480,
-                new String[]{"Ваниль", "Мука", "Масло"}));
+                new String[]{"Vanile", "Dough", "Butter"}));
         allProducts.add(new Product("Beze Cake", R.drawable.beze, "Berry Cakes", 530,
-                new String[]{"Ягоды", "Мука", "Крем"}));
+                new String[]{"Berries", "Dough", "Cream"}));
         allProducts.add(new Product("Birthday Cake", R.drawable.birthday_cake, "Caramel Cakes", 510,
-                new String[]{"Карамель", "Мука", "Крем"}));
+                new String[]{"Caramel", "Dough", "Cream"}));
         allProducts.add(new Product("Nostalgy", R.drawable.tart_nut, "Other Sweets", 480,
-                new String[]{"Ваниль", "Мука", "Масло"}));
+                new String[]{"Ваниль", "Dough", "Butter"}));
         allProducts.add(new Product("Beze Cake", R.drawable.tart_trad, "Other Sweets", 530,
-                new String[]{"Ягоды", "Мука", "Крем"}));
+                new String[]{"Berries", "Dough", "Cream"}));
         allProducts.add(new Product("Birthday Cake", R.drawable.tart_wheart, "Other Sweets", 510,
-                new String[]{"Карамель", "Мука", "Крем"}));
+                new String[]{"Caramel", "Dough", "Cream"}));
         allProducts.add(new Product("Birthday Cake", R.drawable.pakhlava, "Other Sweets", 510,
-                new String[]{"Карамель", "Мука", "Крем"}));
+                new String[]{"Caramel", "Dough", "Cream"}));
         allProducts.add(new Product("Beze Cake", R.drawable.nut_cookie, "Other Sweets", 530,
-                new String[]{"Ягоды", "Мука", "Крем"}));
+                new String[]{"Ягоды", "Dough", "Cream"}));
         allProducts.add(new Product("Birthday Cake", R.drawable.cookie, "Other Sweets", 510,
-                new String[]{"Карамель", "Мука", "Крем"}));
+                new String[]{"Caramel", "Dough", "Cream"}));
         allProducts.add(new Product("Birthday Cake", R.drawable.cookie_heart, "Other Sweets", 510,
-                new String[]{"Карамель", "Мука", "Крем"}));
+                new String[]{"Caramel", "Dough", "Cream"}));
         allProducts.add(new Product("Birthday Cake", R.drawable.eclair_nt, "Other Sweets", 510,
-                new String[]{"Карамель", "Мука", "Крем"}));
+                new String[]{"Caramel", "Dough", "Cream"}));
     }
 
     private void setupClickListeners() {
@@ -205,14 +205,14 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .collect(Collectors.toList());
         productAdapter.updateProducts(filtered);
-        Toast.makeText(this, "Выбрана категория: " + category, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "selected category: " + category, Toast.LENGTH_SHORT).show();
     }
 
     private void shareApp() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, "Попробуй AvanyanCakes! Лучшие торты здесь!");
-        startActivity(Intent.createChooser(intent, "Поделиться"));
+        intent.putExtra(Intent.EXTRA_TEXT, "Try AvanyanCakes! ");
+        startActivity(Intent.createChooser(intent, "Share"));
     }
 
     private void openProductDetails(Product product) {

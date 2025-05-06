@@ -59,7 +59,7 @@ public class OrderActivity extends AppCompatActivity {
             slicesPicker.setValue(1);
             heightLabel.setText("Height: 10 cm");
             radiusLabel.setText("Radius: 20 cm");
-            slicesLabel.setText("Куски: 1");
+            slicesLabel.setText("Slices: 1");
         });
 
         slicesPicker.setMinValue(1);
@@ -67,12 +67,12 @@ public class OrderActivity extends AppCompatActivity {
         slicesPicker.setWrapSelectorWheel(true);
 
         slicesPicker.setOnValueChangedListener((picker, oldVal, newVal) ->
-                slicesLabel.setText("Куски: " + newVal)
+                slicesLabel.setText("Slices: " + newVal)
         );
 
         orderSlicesButton.setOnClickListener(v -> {
             int selectedSlices = slicesPicker.getValue();
-            ToastUtils.showCustomToast(OrderActivity.this, "Вы выбрали " + selectedSlices + " кусочков", Toast.LENGTH_SHORT);
+            ToastUtils.showCustomToast(OrderActivity.this, "You selected " + selectedSlices + " slices", Toast.LENGTH_SHORT);
         });
 
         int imageResId = getIntent().getIntExtra("ImageResId", -1);
@@ -127,11 +127,11 @@ public class OrderActivity extends AppCompatActivity {
                 auth.signInAnonymously()
                         .addOnCompleteListener(this, task -> {
                             if (task.isSuccessful()) {
-                                Log.d("Auth", "Анонимный вход успешен. UID: " + auth.getCurrentUser().getUid());
+                                Log.d("Auth", "Anonym login sucsessful " + auth.getCurrentUser().getUid());
                                 saveOrder();
                             } else {
-                                Log.e("Auth", "Ошибка анонимного входа", task.getException());
-                                Toast.makeText(OrderActivity.this, "Ошибка авторизации", Toast.LENGTH_SHORT).show();
+                                Log.e("Auth", "anonym error", task.getException());
+                                Toast.makeText(OrderActivity.this, "error logging in", Toast.LENGTH_SHORT).show();
                             }
                         });
             } else {
@@ -149,7 +149,7 @@ public class OrderActivity extends AppCompatActivity {
         String address = addressInput.getText().toString().trim();
 
         if (address.isEmpty()) {
-            Toast.makeText(this, "Введите ваш адрес!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter your adress", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -157,8 +157,8 @@ public class OrderActivity extends AppCompatActivity {
                 500, new String[]{"Flour", "Sugar", "Cocoa"});
         saveOrderToFirestore(cake, height, radius, slices, address);
 
-        Toast.makeText(OrderActivity.this, "Вы заказали торт с высотой " + height
-                + " см, радиусом " + radius + " см и " + slices + " кусочками.\\nДоставка по адресу: " +
+        Toast.makeText(OrderActivity.this, "You ordered a cake with height of " + height
+                + " cm, radius of " + radius + " cm & " + slices + " slices.\\nDeliviery with this adress: " +
                 address, Toast.LENGTH_SHORT).show();
     }
 
