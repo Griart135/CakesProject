@@ -26,7 +26,7 @@ public class CartActivity extends AppCompatActivity {
         cartProducts = (ArrayList<Product>) getIntent().getSerializableExtra("cart");
 
         if (cartProducts == null || cartProducts.isEmpty()) {
-            Toast.makeText(this, "Cart is empty", Toast.LENGTH_SHORT).show();
+            ToastUtils.showCustomToast(this, "Cart is empty", Toast.LENGTH_SHORT);
             cartProducts = new ArrayList<>();
         }
 
@@ -35,12 +35,12 @@ public class CartActivity extends AppCompatActivity {
         }, new ProductAdapter.OnProductActionListener() {
             @Override
             public void onAddToFavorites(Product product) {
-                Toast.makeText(CartActivity.this, "added to favorite", Toast.LENGTH_SHORT).show();
+                ToastUtils.showCustomToast(CartActivity.this, "added to favorite", Toast.LENGTH_SHORT);
             }
 
             @Override
             public void onAddToCart(Product product) {
-                Toast.makeText(CartActivity.this, "added to cart", Toast.LENGTH_SHORT).show();
+                ToastUtils.showCustomToast(CartActivity.this, "added to cart", Toast.LENGTH_SHORT);
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

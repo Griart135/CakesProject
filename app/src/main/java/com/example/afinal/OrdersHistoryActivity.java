@@ -34,7 +34,6 @@ public class OrdersHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_orders_history);
 
         try {
-            // Set up Toolbar
             Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             if (getSupportActionBar() != null) {

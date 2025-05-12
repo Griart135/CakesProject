@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (emailField == null || passwordField == null || loginButton == null || signupLink == null) {
                 Log.e(TAG, "View initialization failed: emailField=" + emailField + ", passwordField=" + passwordField + ", loginButton=" + loginButton + ", signupLink=" + signupLink);
-                Toast.makeText(this, "interface error", Toast.LENGTH_SHORT).show();
+                ToastUtils.showCustomToast(this, "interface error", Toast.LENGTH_SHORT);
                 return;
             }
 
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passwordField.getText().toString().trim();
 
                 if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(this, "enter email and password", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showCustomToast(this, "enter email and password", Toast.LENGTH_SHORT);
                     return;
                 }
 
@@ -46,12 +46,12 @@ public class LoginActivity extends AppCompatActivity {
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "Login successful for email: " + email);
-                                Toast.makeText(this, "login sucsessful", Toast.LENGTH_SHORT).show();
+                                ToastUtils.showCustomToast(this, "login sucsessful", Toast.LENGTH_SHORT);
                                 startActivity(new Intent(this, MainActivity.class));
                                 finish();
                             } else {
                                 Log.e(TAG, "Login failed: " + task.getException().getMessage(), task.getException());
-                                Toast.makeText(this, "login error " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                ToastUtils.showCustomToast(this, "login error " + task.getException().getMessage(), Toast.LENGTH_LONG);
                             }
                         });
             });
@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             });
         } catch (Exception e) {
             Log.e(TAG, "Error in onCreate: " + e.getMessage(), e);
-            Toast.makeText(this, "error " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtils.showCustomToast(this, "error " + e.getMessage(), Toast.LENGTH_SHORT);
         }
     }
 }

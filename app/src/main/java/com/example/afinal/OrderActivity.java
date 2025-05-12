@@ -31,7 +31,6 @@ public class OrderActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private EditText addressInput;
 
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +50,6 @@ public class OrderActivity extends AppCompatActivity {
         slicesLabel = findViewById(R.id.slices_label);
         clearSelectionButton = findViewById(R.id.clear_button);
         addressInput = findViewById(R.id.address_input);
-
 
         clearSelectionButton.setOnClickListener(v -> {
             heightSeekBar.setProgress(10);
@@ -122,23 +120,35 @@ public class OrderActivity extends AppCompatActivity {
 
         Button orderButton = findViewById(R.id.confirm_order_button);
         orderButton.setOnClickListener(v -> {
-            FirebaseUser currentUser = auth.getCurrentUser();
-            if (currentUser == null) {
-                auth.signInAnonymously()
-                        .addOnCompleteListener(this, task -> {
-                            if (task.isSuccessful()) {
-                                Log.d("Auth", "Anonym login sucsessful " + auth.getCurrentUser().getUid());
-                                saveOrder();
-                            } else {
-                                Log.e("Auth", "anonym error", task.getException());
-                                Toast.makeText(OrderActivity.this, "error logging in", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            } else {
-                saveOrder();
+            int height = heightSeekBar.getProgress() + 5;
+            int radius = radiusSeekBar.getProgress() + 5;
+            int slices = slicesPicker.getValue();
+            String address = addressInput.getText().toString().trim();
+
+            if (address.isEmpty()) {
+                ToastUtils.showCustomToast(this, "Enter your adress", Toast.LENGTH_SHORT);
+                return;
             }
 
-
+            ConfirmOrderDialogFragment dialog = ConfirmOrderDialogFragment.newInstance(cakeName != null ? cakeName : "Unknown Cake", height, radius, slices, address);
+            dialog.setOnConfirmListener(() -> {
+                FirebaseUser currentUser = auth.getCurrentUser();
+                if (currentUser == null) {
+                    auth.signInAnonymously()
+                            .addOnCompleteListener(this, task -> {
+                                if (task.isSuccessful()) {
+                                    Log.d("Auth", "Anonym login sucsessful " + auth.getCurrentUser().getUid());
+                                    saveOrder();
+                                } else {
+                                    Log.e("Auth", "anonym error", task.getException());
+                                    ToastUtils.showCustomToast(OrderActivity.this, "error logging in", Toast.LENGTH_SHORT);
+                                }
+                            });
+                } else {
+                    saveOrder();
+                }
+            });
+            dialog.show(getSupportFragmentManager(), "ConfirmOrderDialog");
         });
     }
 
@@ -157,9 +167,9 @@ public class OrderActivity extends AppCompatActivity {
                 500, new String[]{"Flour", "Sugar", "Cocoa"});
         saveOrderToFirestore(cake, height, radius, slices, address);
 
-        Toast.makeText(OrderActivity.this, "You ordered a cake with height of " + height
+        ToastUtils.showCustomToast(OrderActivity.this, "You ordered a cake with height of " + height
                 + " cm, radius of " + radius + " cm & " + slices + " slices.\\nDeliviery with this adress: " +
-                address, Toast.LENGTH_SHORT).show();
+                address, Toast.LENGTH_SHORT);
     }
 
     public void saveOrderToFirestore(Product product, int height, int radius, int slices,  String address) {
@@ -196,7 +206,6 @@ public class OrderActivity extends AppCompatActivity {
         return orderData;
     }
 }
-
 
 
 

@@ -36,7 +36,7 @@ public class SignupActivity extends AppCompatActivity {
 
             if (emailField == null || passwordField == null || signupButton == null || loginLink == null) {
                 Log.e(TAG, "View initialization failed: emailField=" + emailField + ", passwordField=" + passwordField + ", signupButton=" + signupButton + ", loginLink=" + loginLink);
-                Toast.makeText(this, "interface error", Toast.LENGTH_SHORT).show();
+                ToastUtils.showCustomToast(this, "interface error", Toast.LENGTH_SHORT);
                 return;
             }
 
@@ -46,12 +46,12 @@ public class SignupActivity extends AppCompatActivity {
                 String name = nameField != null ? nameField.getText().toString().trim() : "";
 
                 if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(this, "please enter email and password", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showCustomToast(this, "please enter email and password", Toast.LENGTH_SHORT);
                     return;
                 }
 
                 if (password.length() < 6) {
-                    Toast.makeText(this, "password has to be more than 5 symbols", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showCustomToast(this, "password has to be more than 5 symbols", Toast.LENGTH_SHORT);
                     return;
                 }
 
@@ -86,7 +86,7 @@ public class SignupActivity extends AppCompatActivity {
                                         });
                             } else {
                                 Log.e(TAG, "Signup failed: " + task.getException().getMessage(), task.getException());
-                                Toast.makeText(this, "error signup " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                ToastUtils.showCustomToast(this, "error signup " + task.getException().getMessage(), Toast.LENGTH_LONG);
                             }
                         });
             });
@@ -97,7 +97,7 @@ public class SignupActivity extends AppCompatActivity {
             });
         } catch (Exception e) {
             Log.e(TAG, "Error in onCreate: " + e.getMessage(), e);
-            Toast.makeText(this, "error " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtils.showCustomToast(this, "error " + e.getMessage(), Toast.LENGTH_SHORT);
         }
     }
 }

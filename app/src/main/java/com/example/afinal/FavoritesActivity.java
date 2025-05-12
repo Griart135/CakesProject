@@ -25,7 +25,7 @@ public class FavoritesActivity extends AppCompatActivity {
         favoriteProducts = (ArrayList<Product>) getIntent().getSerializableExtra("favorites");
 
         if (favoriteProducts == null || favoriteProducts.isEmpty()) {
-            Toast.makeText(this, "Избранное пусто", Toast.LENGTH_SHORT).show();
+            ToastUtils.showCustomToast(this, "Избранное пусто", Toast.LENGTH_SHORT);
             favoriteProducts = new ArrayList<>();
         }
 
@@ -33,12 +33,12 @@ public class FavoritesActivity extends AppCompatActivity {
         }, new ProductAdapter.OnProductActionListener() {
             @Override
             public void onAddToFavorites(Product product) {
-                Toast.makeText(FavoritesActivity.this, "Уже в избранном", Toast.LENGTH_SHORT).show();
+                ToastUtils.showCustomToast(FavoritesActivity.this, "Уже в избранном", Toast.LENGTH_SHORT);
             }
 
             @Override
             public void onAddToCart(Product product) {
-                Toast.makeText(FavoritesActivity.this, "Добавлено в корзину", Toast.LENGTH_SHORT).show();
+                ToastUtils.showCustomToast(FavoritesActivity.this, "Добавлено в корзину", Toast.LENGTH_SHORT);
             }
         });
 

@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAddToFavorites(Product product) {
                 if (!favoriteCakes.contains(product)) {
                     favoriteCakes.add(product);
-                    Toast.makeText(MainActivity.this, "Добавлено в избранное", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showCustomToast(MainActivity.this, "Добавлено в избранное", Toast.LENGTH_SHORT);
                 }
             }
 
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAddToCart(Product product) {
                 if (!cartCakes.contains(product)) {
                     cartCakes.add(product);
-                    Toast.makeText(MainActivity.this, "Добавлено в корзину", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showCustomToast(MainActivity.this, "Добавлено в корзину", Toast.LENGTH_SHORT);
                 }
             }
         });
@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .collect(Collectors.toList());
         productAdapter.updateProducts(filtered);
-        Toast.makeText(this, "selected category: " + category, Toast.LENGTH_SHORT).show();
+        ToastUtils.showCustomToast(this, "selected category: " + category, Toast.LENGTH_SHORT);
     }
 
     private void shareApp() {
