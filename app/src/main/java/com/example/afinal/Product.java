@@ -3,6 +3,11 @@ package com.example.afinal;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Product implements Parcelable {
     private String name;
     private int imageResId;
@@ -64,6 +69,15 @@ public class Product implements Parcelable {
         return 0;
     }
 
+    public Map<String, Object> toMap() {
+        Map<String,Object> map = new HashMap<>();
+        map.put("name", name != null ? name : "Unknown cake");
+        map.put("imageResId", imageResId);
+        map.put("description", description != null ? description : " ");
+        map.put("price", price);
+        map.put("ingredients", ingredients != null ? Arrays.asList(ingredients) : new ArrayList<>());
+        return map;
+    }
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
