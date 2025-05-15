@@ -44,6 +44,9 @@ public class Product implements Parcelable {
         }
     };
 
+    public Product(String id, String s, int i, String s1, int i1, String[] ingredients) {
+    }
+
     public String getName() {
         return name;
     }

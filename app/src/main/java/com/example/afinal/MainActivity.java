@@ -9,20 +9,28 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
     private FirebaseFirestore db;
+    private FirebaseAuth auth;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private TextView categoryChocolate, categoryHoney, categoryBerry, categoryCaramel, categoryVanilla;
@@ -40,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -55,11 +64,11 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
-                Toast.makeText(this, "Главная", Toast.LENGTH_SHORT).show();
+                ToastUtils.showCustomToast(this, "Главная", Toast.LENGTH_SHORT);
             } else if (id == R.id.nav_custom) {
                 startActivity(new Intent(this, CustomActivity.class));
             } else if (id == R.id.nav_profile) {
-                Toast.makeText(this, "Профиль", Toast.LENGTH_SHORT).show();
+                ToastUtils.showCustomToast(this, "Профиль", Toast.LENGTH_SHORT);
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
@@ -71,17 +80,93 @@ public class MainActivity extends AppCompatActivity {
         productAdapter = new ProductAdapter(this, allProducts, this::openProductDetails, new ProductAdapter.OnProductActionListener() {
             @Override
             public void onAddToFavorites(Product product) {
-                if (!favoriteCakes.contains(product)) {
-                    favoriteCakes.add(product);
-                    ToastUtils.showCustomToast(MainActivity.this, "Добавлено в избранное", Toast.LENGTH_SHORT);
+                if (auth.getCurrentUser() != null) {
+                    Log.d(TAG, "Adding to favorites: " + product.getName());
+                    db.collection("users")
+                            .document(auth.getCurrentUser().getUid())
+                            .collection("favorites")
+                            .document(product.getName())
+                            .set(product.toMap())
+                            .addOnSuccessListener(aVoid -> {
+                                if (!favoriteCakes.contains(product)) {
+                                    favoriteCakes.add(product);
+                                }
+                                ToastUtils.showCustomToast(MainActivity.this, "added to favorites", Toast.LENGTH_SHORT);
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e(TAG, "Failed to add to favorites: " + e.getMessage(), e);
+                                ToastUtils.showCustomToast(MainActivity.this, "error adding to favorites", Toast.LENGTH_SHORT);
+                            });
+                } else {
+                    ToastUtils.showCustomToast(MainActivity.this, "login, to save to favorites", Toast.LENGTH_SHORT);
+                }
+            }
+
+            @Override
+            public void onRemoveFromFavorites(Product product) {
+                if (auth.getCurrentUser() != null) {
+                    Log.d(TAG, "Removing from favorites: " + product.getName());
+                    db.collection("users")
+                            .document(auth.getCurrentUser().getUid())
+                            .collection("favorites")
+                            .document(product.getName())
+                            .delete()
+                            .addOnSuccessListener(aVoid -> {
+                                favoriteCakes.remove(product);
+                                ToastUtils.showCustomToast(MainActivity.this, "deleted from favorites", Toast.LENGTH_SHORT);
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e(TAG, "Failed to remove from favorites: " + e.getMessage(), e);
+                                ToastUtils.showCustomToast(MainActivity.this, "error delelting from favorites", Toast.LENGTH_SHORT);
+                            });
+                } else {
+                    ToastUtils.showCustomToast(MainActivity.this, "login, to delete from favorites", Toast.LENGTH_SHORT);
                 }
             }
 
             @Override
             public void onAddToCart(Product product) {
-                if (!cartCakes.contains(product)) {
-                    cartCakes.add(product);
-                    ToastUtils.showCustomToast(MainActivity.this, "Добавлено в корзину", Toast.LENGTH_SHORT);
+                if (auth.getCurrentUser() != null) {
+                    Log.d(TAG, "Adding to cart: " + product.getName());
+                    db.collection("users")
+                            .document(auth.getCurrentUser().getUid())
+                            .collection("cart")
+                            .document(product.getName())
+                            .set(product.toMap())
+                            .addOnSuccessListener(aVoid -> {
+                                if (!cartCakes.contains(product)) {
+                                    cartCakes.add(product);
+                                }
+                                ToastUtils.showCustomToast(MainActivity.this, "added to cart", Toast.LENGTH_SHORT);
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e(TAG, "Failed to add to cart: " + e.getMessage(), e);
+                                ToastUtils.showCustomToast(MainActivity.this, "error adding to cart", Toast.LENGTH_SHORT);
+                            });
+                } else {
+                    ToastUtils.showCustomToast(MainActivity.this, "login, to add to cart", Toast.LENGTH_SHORT);
+                }
+            }
+
+            @Override
+            public void onRemoveFromCart(Product product) {
+                if (auth.getCurrentUser() != null) {
+                    Log.d(TAG, "Removing from cart: " + product.getName());
+                    db.collection("users")
+                            .document(auth.getCurrentUser().getUid())
+                            .collection("cart")
+                            .document(product.getName())
+                            .delete()
+                            .addOnSuccessListener(aVoid -> {
+                                cartCakes.remove(product);
+                                ToastUtils.showCustomToast(MainActivity.this, "deleted from cart", Toast.LENGTH_SHORT);
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e(TAG, "Failed to remove from cart: " + e.getMessage(), e);
+                                ToastUtils.showCustomToast(MainActivity.this, "error deleting from cart", Toast.LENGTH_SHORT);
+                            });
+                } else {
+                    ToastUtils.showCustomToast(MainActivity.this, "login to delete from cart", Toast.LENGTH_SHORT);
                 }
             }
         });
@@ -90,15 +175,32 @@ public class MainActivity extends AppCompatActivity {
 
         setupClickListeners();
 
+        if (auth.getCurrentUser() != null) {
+            loadFavorites();
+            loadCart();
+        } else {
+            auth.signInAnonymously()
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Anonymous login successful");
+                            loadFavorites();
+                            loadCart();
+                        } else {
+                            Log.e(TAG, "Anonymous login failed: " + task.getException().getMessage(), task.getException());
+                            ToastUtils.showCustomToast(this, "account error", Toast.LENGTH_SHORT);
+                        }
+                    });
+        }
+
         db.collection("cakes").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 task.getResult().forEach(document -> {
                     String name = document.getString("name");
                     Long price = document.getLong("price");
-                    Log.d("Firestore", "Document: " + name + ", Price: " + price);
+                    Log.d(TAG, "Document: " + name + ", Price: " + price);
                 });
             } else {
-                Log.e("Firestore", "Error getting cakes", task.getException());
+                Log.e(TAG, "Error getting cakes", task.getException());
             }
         });
     }
@@ -173,13 +275,13 @@ public class MainActivity extends AppCompatActivity {
 
         iconFavorite.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
-            intent.putParcelableArrayListExtra("favorites", new ArrayList<>(favoriteCakes));
+            intent.putExtra("favorites", (Serializable) new ArrayList<>(favoriteCakes));
             startActivity(intent);
         });
 
         iconCart.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, CartActivity.class);
-            intent.putParcelableArrayListExtra("cart", new ArrayList<>(cartCakes));
+            intent.putExtra("cart", (Serializable) new ArrayList<>(cartCakes));
             startActivity(intent);
         });
 
@@ -189,6 +291,64 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
         findViewById(R.id.iconGoToCustom).setOnClickListener(v -> startActivity(new Intent(this, CustomActivity.class)));
+    }
+
+    private void loadFavorites() {
+        if (auth.getCurrentUser() != null) {
+            db.collection("users")
+                    .document(auth.getCurrentUser().getUid())
+                    .collection("favorites")
+                    .get()
+                    .addOnSuccessListener(querySnapshot -> {
+                        favoriteCakes.clear();
+                        for (DocumentSnapshot doc : querySnapshot) {
+                            List<String> ingredientsList = (List<String>) doc.get("ingredients");
+                            String[] ingredients = ingredientsList != null ?
+                                    ingredientsList.toArray(new String[0]) : new String[0];
+                            Product product = new Product(
+                                    doc.getString("name") != null ? doc.getString("name") : "Unknown Cake",
+                                    doc.getLong("imageResId") != null ? doc.getLong("imageResId").intValue() : 0,
+                                    doc.getString("description") != null ? doc.getString("description") : "",
+                                    doc.getLong("price") != null ? doc.getLong("price").intValue() : 0,
+                                    ingredients
+                            );
+                            favoriteCakes.add(product);
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Failed to load favorites: " + e.getMessage(), e);
+                        ToastUtils.showCustomToast(this, "error uploading the favorites", Toast.LENGTH_SHORT);
+                    });
+        }
+    }
+
+    private void loadCart() {
+        if (auth.getCurrentUser() != null) {
+            db.collection("users")
+                    .document(auth.getCurrentUser().getUid())
+                    .collection("cart")
+                    .get()
+                    .addOnSuccessListener(querySnapshot -> {
+                        cartCakes.clear();
+                        for (DocumentSnapshot doc : querySnapshot) {
+                            List<String> ingredientsList = (List<String>) doc.get("ingredients");
+                            String[] ingredients = ingredientsList != null ?
+                                    ingredientsList.toArray(new String[0]) : new String[0];
+                            Product product = new Product(
+                                    doc.getString("name") != null ? doc.getString("name") : "Unknown Cake",
+                                    doc.getLong("imageResId") != null ? doc.getLong("imageResId").intValue() : 0,
+                                    doc.getString("description") != null ? doc.getString("description") : "",
+                                    doc.getLong("price") != null ? doc.getLong("price").intValue() : 0,
+                                    ingredients
+                            );
+                            cartCakes.add(product);
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Failed to load cart: " + e.getMessage(), e);
+                        ToastUtils.showCustomToast(this, "error uploading the cart", Toast.LENGTH_SHORT);
+                    });
+        }
     }
 
     private void filterProducts(String category) {
@@ -211,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
     private void shareApp() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, "Try AvanyanCakes! ");
+        intent.putExtra(Intent.EXTRA_TEXT, "Try AvanyanCakes!");
         startActivity(Intent.createChooser(intent, "Share"));
     }
 
@@ -234,7 +394,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-
 
 
 

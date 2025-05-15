@@ -32,7 +32,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                           OnProductClickListener onProductClickListener) {
         this(context, products, onProductClickListener, new OnProductActionListener() {
             @Override public void onAddToFavorites(Product product) {}
+            @Override public void onRemoveFromFavorites(Product product) {}
             @Override public void onAddToCart(Product product) {}
+            @Override public void onRemoveFromCart(Product product) {}
         });
     }
 
@@ -72,7 +74,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     public interface OnProductActionListener {
         void onAddToFavorites(Product product);
+        void onRemoveFromFavorites(Product product);
         void onAddToCart(Product product);
+        void onRemoveFromCart(Product product);
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
