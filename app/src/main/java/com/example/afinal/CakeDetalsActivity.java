@@ -56,7 +56,6 @@ public class CakeDetalsActivity extends AppCompatActivity {
         deliveryTime = findViewById(R.id.deliveryTime);
         btnOrder = findViewById(R.id.btn_order);
         btnCakeInfo = findViewById(R.id.btn_cake_info);
-        btnAddToFavorites = findViewById(R.id.btn_add_to_favorites);
 
         setupCakeData(imageResId, cakeName, cakeDescription, price, ingredients);
 
@@ -83,13 +82,6 @@ public class CakeDetalsActivity extends AppCompatActivity {
                 dialog.show(getSupportFragmentManager(), "CakeInfoDialog");
             }
         });
-
-        btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleFavorite();
-            }
-        });
     }
 
     private void setupCakeData(int imageResId, String cakeName, String cakeDescription, int price, String[] ingredients) {
@@ -109,17 +101,6 @@ public class CakeDetalsActivity extends AppCompatActivity {
         ingredientsText.setText(ingredientsList.toString());
 
         deliveryTime.setText("Ready in 45 min");
-    }
-
-    private void toggleFavorite() {
-        isFavorite = !isFavorite;
-        if (isFavorite) {
-            btnAddToFavorites.setText("★ Favorited");
-            btnAddToFavorites.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.black));
-        } else {
-            btnAddToFavorites.setText("★ Add to Favorites");
-            btnAddToFavorites.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.black));
-        }
     }
 }
 
