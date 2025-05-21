@@ -26,6 +26,15 @@ public class LoginActivity extends AppCompatActivity {
             EditText passwordField = findViewById(R.id.password_field);
             Button loginButton = findViewById(R.id.login_button);
             TextView signupLink = findViewById(R.id.signup_link);
+            Button testUserButton = findViewById(R.id.test_user_button);
+
+            if (testUserButton == null) {
+                Log.e(TAG, "View initialization failed: testUserButton is null");
+                ToastUtils.showCustomToast(this, "interface error", Toast.LENGTH_SHORT);
+                return;
+            }
+
+
 
             if (emailField == null || passwordField == null || loginButton == null || signupLink == null) {
                 Log.e(TAG, "View initialization failed: emailField=" + emailField + ", passwordField=" + passwordField + ", loginButton=" + loginButton + ", signupLink=" + signupLink);
@@ -55,6 +64,25 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
             });
+
+            testUserButton.setOnClickListener(v -> {
+                String testEmail = "individualproject2025@gmail.com";
+                String testPassword = "Samsung2025";
+
+                auth.signInWithEmailAndPassword(testEmail, testPassword)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "Test login successful");
+                                ToastUtils.showCustomToast(this, "Test login successful", Toast.LENGTH_SHORT);
+                                startActivity(new Intent(this, MainActivity.class));
+                                finish();
+                            } else {
+                                Log.e(TAG, "Test login failed: " + task.getException().getMessage(), task.getException());
+                                ToastUtils.showCustomToast(this, "login error " + task.getException().getMessage(), Toast.LENGTH_LONG);
+                            }
+                        });
+            });
+
 
             signupLink.setOnClickListener(v -> {
                 startActivity(new Intent(this, SignupActivity.class));

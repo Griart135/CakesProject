@@ -38,6 +38,5 @@
         <activity android:name=".LoginActivity"/>
         <activity android:name=".SignupActivity"/>
         <activity android:name=".OrdersHistoryActivity"/>
-        <activity android:name=".AdminOrdersActivity"/>
     </application>
 </manifest>
