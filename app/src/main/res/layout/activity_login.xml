@@ -50,6 +50,17 @@
         android:padding="12dp"
         android:layout_marginTop="8dp"/>
 
+    <Button
+        android:id="@+id/admin_user_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Admin User Login"
+        android:backgroundTint="#A0522D"
+        android:textColor="#F5F5DC"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:layout_marginTop="8dp"/>
+
 
     <TextView
         android:id="@+id/signup_link"

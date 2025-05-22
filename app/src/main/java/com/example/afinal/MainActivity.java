@@ -64,11 +64,11 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
-                ToastUtils.showCustomToast(this, "Главная", Toast.LENGTH_SHORT);
+                ToastUtils.showCustomToast(this, "main", Toast.LENGTH_SHORT);
             } else if (id == R.id.nav_custom) {
                 startActivity(new Intent(this, CustomActivity.class));
             } else if (id == R.id.nav_profile) {
-                ToastUtils.showCustomToast(this, "Профиль", Toast.LENGTH_SHORT);
+                ToastUtils.showCustomToast(this, "profile", Toast.LENGTH_SHORT);
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;

@@ -65,6 +65,9 @@ public class CakeDetalsActivity extends AppCompatActivity {
                 Intent intent = new Intent(CakeDetalsActivity.this, OrderActivity.class);
                 intent.putExtra("ImageResId", imageResId);
                 intent.putExtra("cake_name", cakeName);
+                intent.putExtra("cake_description", cakeDescription);
+                intent.putExtra("cake_price", price);
+                intent.putExtra("cake_ingredients", ingredients);
                 startActivity(intent);
                 deliveryTime.setText("Order placed! Ready in 45 min");
             }
@@ -96,7 +99,7 @@ public class CakeDetalsActivity extends AppCompatActivity {
                 ingredientsList.append(ingredient).append("\n");
             }
         } else {
-            ingredientsList.append("Ингредиенты не указаны.");
+            ingredientsList.append("No ingridients.");
         }
         ingredientsText.setText(ingredientsList.toString());
 

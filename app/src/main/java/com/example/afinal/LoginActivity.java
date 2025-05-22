@@ -27,12 +27,23 @@ public class LoginActivity extends AppCompatActivity {
             Button loginButton = findViewById(R.id.login_button);
             TextView signupLink = findViewById(R.id.signup_link);
             Button testUserButton = findViewById(R.id.test_user_button);
+            Button adminUserButton = findViewById(R.id.admin_user_button);
 
             if (testUserButton == null) {
                 Log.e(TAG, "View initialization failed: testUserButton is null");
                 ToastUtils.showCustomToast(this, "interface error", Toast.LENGTH_SHORT);
                 return;
             }
+            if (adminUserButton == null) {
+                Log.e(TAG, "View initialization failed: testUserButton is null");
+                ToastUtils.showCustomToast(this, "interface error", Toast.LENGTH_SHORT);
+                return;
+            }
+
+            adminUserButton.setOnClickListener(v -> {
+                AdminLoginFragment fragment = new AdminLoginFragment();
+                fragment.show(getSupportFragmentManager(), "admin_login");
+            });
 
 
 

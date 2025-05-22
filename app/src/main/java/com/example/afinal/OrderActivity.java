@@ -30,6 +30,7 @@ public class OrderActivity extends AppCompatActivity {
     private Button orderSlicesButton, clearSelectionButton, confirmButton;
     private FirebaseAuth auth;
     private EditText addressInput;
+    private Product selectedProduct;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -73,18 +74,18 @@ public class OrderActivity extends AppCompatActivity {
             ToastUtils.showCustomToast(OrderActivity.this, "You selected " + selectedSlices + " slices", Toast.LENGTH_SHORT);
         });
 
-        int imageResId = getIntent().getIntExtra("ImageResId", -1);
-        String cakeName = getIntent().getStringExtra("cake_name");
+//        int imageResId = getIntent().getIntExtra("ImageResId", -1);
+//        String cakeName = getIntent().getStringExtra("cake_name");
 
-        if (cakeName != null) {
-            cakeNameTextView.setText(cakeName);
-        }
-
-        if (imageResId != -1) {
-            orderCakeImage.setImageResource(imageResId);
-        } else {
-            orderCakeImage.setVisibility(View.GONE);
-        }
+//        if (cakeName != null) {
+//            cakeNameTextView.setText(cakeName);
+//        }
+//
+//        if (imageResId != -1) {
+//            orderCakeImage.setImageResource(imageResId);
+//        } else {
+//            orderCakeImage.setVisibility(View.GONE);
+//        }
 
         heightSeekBar.setProgress(10);
         radiusSeekBar.setProgress(20);
@@ -117,6 +118,27 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+
+        String cakeName = getIntent().getStringExtra("cake_name");
+        String cakeDescription = getIntent().getStringExtra("cake_description");
+        int cakePrice = getIntent().getIntExtra("cake_price", 0);
+        String[] cakeIngredients = getIntent().getStringArrayExtra("cake_ingredients");
+        int imageResId = getIntent().getIntExtra("ImageResId", -1);
+
+        selectedProduct = new Product(
+                cakeName != null ? cakeName : "Unknown Cake",
+                imageResId,
+                cakeDescription != null ? cakeDescription : "",
+                cakePrice,
+                cakeIngredients != null ? cakeIngredients : new String[]{}
+        );
+
+        if (cakeName != null) {
+            cakeNameTextView.setText(cakeName);
+        }
+        if (imageResId != -1) {
+            orderCakeImage.setImageResource(imageResId);
+        }
 
         Button orderButton = findViewById(R.id.confirm_order_button);
         orderButton.setOnClickListener(v -> {
@@ -163,9 +185,9 @@ public class OrderActivity extends AppCompatActivity {
             return;
         }
 
-        Product cake = new Product("Chocolate Cake", R.drawable.cheesecake, "Delicious chocolate cake",
-                500, new String[]{"Flour", "Sugar", "Cocoa"});
-        saveOrderToFirestore(cake, height, radius, slices, address);
+        Product cake = selectedProduct;
+
+        saveOrderToFirestore(selectedProduct, height, radius, slices, address);
 
         ToastUtils.showCustomToast(OrderActivity.this, "You ordered a cake with height of " + height
                 + " cm, radius of " + radius + " cm & " + slices + " slices.\\nDeliviery with this adress: " +
