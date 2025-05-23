@@ -20,15 +20,15 @@ public class ProfileActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         profileEmail = findViewById(R.id.profile_email);
         profileName = findViewById(R.id.profile_name);
-        View ordersButton = findViewById(R.id.orders_button);
+//        View ordersButton = findViewById(R.id.orders_button);
         View editProfileButton = findViewById(R.id.edit_profile_button);
-        View historyOrders = findViewById(R.id.history_button);
+//        View historyOrders = findViewById(R.id.history_button);
         View logoutButton = findViewById(R.id.logout_button);
 
-        historyOrders.setOnClickListener(v -> {
-            startActivity(new Intent(this, OrdersHistoryActivity.class));
-            finish();
-        });
+//        historyOrders.setOnClickListener(v -> {
+//            startActivity(new Intent(this, OrdersHistoryActivity.class));
+//            finish();
+//        });
         editProfileButton.setOnClickListener(v -> {
             startActivity(new Intent(this, SignupActivity.class));
             finish();

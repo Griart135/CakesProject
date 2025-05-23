@@ -38,7 +38,7 @@ public class FavoritesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Избранное");
+            getSupportActionBar().setTitle("Favorites");
         }
         toolbar.setBackgroundColor(0xFF800000);
         toolbar.setTitleTextColor(0xFFF5F5DC);

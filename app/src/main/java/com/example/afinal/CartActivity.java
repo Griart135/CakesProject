@@ -40,7 +40,7 @@ public class CartActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Корзина");
+            getSupportActionBar().setTitle("Wishlist");
         }
         toolbar.setBackgroundColor(0xFF800000);
         toolbar.setTitleTextColor(0xFFF5F5DC);
