@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_home"
-        android:title="Главная" />
+        android:title="Main" />
     <item
         android:id="@+id/nav_custom"
-        android:title="Создать торт" />
+        android:title="Custom a cake" />
     <item
         android:id="@+id/nav_profile"
-        android:title="Профиль" />
+        android:title="Main" />
 </menu>
